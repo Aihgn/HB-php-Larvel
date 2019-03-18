@@ -297,7 +297,7 @@
 		
 		//Lang Open/Close
 	
-		$(".lang-wrap").on('click', function(e){
+		$(".account-wrap").on('click', function(e){
 			$(".clicked").removeClass("clicked");
 			$(this).addClass("clicked");
 			e.stopPropagation();
