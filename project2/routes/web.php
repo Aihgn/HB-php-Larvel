@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [
+	'as'=>'home',
+	'uses'=>'PageController@getIndex'
+]);
 
 Route::get('home', [
 	'as'=>'home',
@@ -30,29 +31,29 @@ Route::get('about', [
 	'uses'=>'PageController@getAbout'
 ]);
 
-Route::get('login', [
-	'as'=>'login',
-	'uses'=>'PageController@getLogin'
-]);
+// Route::get('login', [
+// 	'as'=>'login',
+// 	'uses'=>'PageController@getLogin'
+// ]);
 
-Route::post('login', [
-	'as'=>'login',
-	'uses'=>'PageController@postLogin'
-]);
+// Route::post('login', [
+// 	'as'=>'login',
+// 	'uses'=>'PageController@postLogin'
+// ]);
 
-Route::get('register', [
-	'as'=>'register',
-	'uses'=>'PageController@getRegister'
-]);
+// Route::get('register', [
+// 	'as'=>'register',
+// 	'uses'=>'PageController@getRegister'
+// ]);
 
-Route::post('register', [
-	'as'=>'register',
-	'uses'=>'PageController@postRegister'
-]);
+// Route::post('register', [
+// 	'as'=>'register',
+// 	'uses'=>'PageController@postRegister'
+// ]);
 
 route::get('guestbooking', [
 	'as'=>'guestbooking',
 	'uses'=>'PageController@getGuestBooking'
 ]);
 
-// Auth::routes();
+Auth::routes();

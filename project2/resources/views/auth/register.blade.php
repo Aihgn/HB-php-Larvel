@@ -8,6 +8,9 @@
                 <div class="col-8 col-sm-6">                            
                     <div class="input-form">
                         <h1 class="text-center">Register</h1>
+                        {{-- @if(Session::has('success'))
+                            <div class="alert-error text-center mt-4">{{Session::get('success')}}</div>
+                        @endif --}}
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
 
@@ -16,9 +19,9 @@
                                 <input id="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                    <div class="alert-error text-center mt-4">
+                                        <strong>*{{ $errors->first('name') }}</strong>
+                                    </div>
                                 @endif                               
                             </div>
 
@@ -27,9 +30,9 @@
                                 <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                    <div class="alert-error text-center mt-4">
+                                        <strong>*{{ $errors->first('email') }}</strong>
+                                    </div>
                                 @endif
                             </div>
 
@@ -47,11 +50,6 @@
                             <div class="input-field">
                                 <label for="password-confirm">{{ __('Confirm Password') }}</label>
                                 <input id="password-confirm" type="password"  name="password_confirmation" required>
-                                @if ($errors->has('password_confirmation'))
-                                    <div class="alert-error text-center mt-4">
-                                        <strong>*{{ $errors->first('password_confirmation') }}</strong>
-                                    </div>
-                                @endif
                             </div>
 
                             <div class="button-div text-center col-6  col-sm-4 col-lg-12">                                

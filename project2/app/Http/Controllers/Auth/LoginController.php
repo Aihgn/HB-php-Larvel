@@ -25,8 +25,13 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
+    protected function authenticated(Request $request, $user)
+    {
+        if ( $user->isAdmin() ) {
+        return redirect()->route('dashboard');
+        }
+        return redirect('/about');
+    }
     /**
      * Create a new controller instance.
      *

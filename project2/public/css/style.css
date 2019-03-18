@@ -1830,7 +1830,7 @@ select.form {
 }
 
 .input-field{
-    margin: 3.5rem 0;
+    margin: 3rem 0;
     position: relative;
 }
 
@@ -1890,4 +1890,6 @@ a.account-help:hover{
 
 .alert-error{
     background-color: transparent;
+    color:#fff;
+    font-size: .9rem;
 }
