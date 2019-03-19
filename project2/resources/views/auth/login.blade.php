@@ -8,6 +8,9 @@
                     <div class="col-8 col-sm-6">                            
                         <div class="input-form">
                             <h1 class="text-center mb-4">Login</h1>
+                            @if(Session::has('failed'))
+                                <div class="alert-error text-center mt-4" id="login_failed">{{Session::get('failed')}}</div>
+                            @endif
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
 

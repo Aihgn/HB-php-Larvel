@@ -1965,9 +1965,19 @@ a.account-help:hover{
     text-decoration: none;
     color: #fff;
 }
-
+/*=======================================================*/
 .alert-error{
     background-color: transparent;
     color:#fff;
     font-size: .9rem;
+}
+#login_failed{
+    border: 2px solid #ea1313;
+    background-color: #be47478a;
+}
+
+#reg_success{
+    border: 2px solid #08b929;
+    background-color: #9bb5a58a;
+    color: #23c94d;
 }

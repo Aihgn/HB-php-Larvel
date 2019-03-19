@@ -8,9 +8,9 @@
                 <div class="col-8 col-sm-6">                            
                     <div class="input-form">
                         <h1 class="text-center">Register</h1>
-                        {{-- @if(Session::has('success'))
-                            <div class="alert-error text-center mt-4">{{Session::get('success')}}</div>
-                        @endif --}}
+                        @if(Session::has('success'))
+                            <div class="alert-error text-center mt-4"id="reg_success">{{Session::get('success')}}</div>
+                        @endif
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
 
