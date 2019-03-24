@@ -13,11 +13,11 @@
 					</div>
 					<div class="col-12 mt-3 mb-5 parallax-fade-top">
 						<div class="hero-stars">
-							<i class="fa fa-star-o"></i>
-							<i class="fa fa-star-o"></i>
-							<i class="fa fa-star-o"></i>
-							<i class="fa fa-star-o"></i>
-							<i class="fa fa-star-o"></i>
+							<i class="far fa-star"></i>
+							<i class="far fa-star"></i>
+							<i class="far fa-star"></i>
+							<i class="far fa-star"></i>
+							<i class="far fa-star"></i>
 						</div>
 					</div>
 					<div class="col-12 mt-3 parallax-fade-top">
@@ -77,24 +77,26 @@
 			</div>
 		</div>
 		
-		<div class="slideshow">
-			<div class="slide slide--current parallax-top" id="slide-index">
-
-				<figure class="slide__figure">
-					<div class="slide__figure-inner">
-						<div class="slide__figure-img" style="background-image: url(./img/1.jpg)"></div>
-						<div class="slide__figure-reveal"></div>
+		<div class="bg-home">
+			<div class="bg parallax-top" style="padding-bottom: 70px;">
+				<figure class="bg__figure">
+					<div class="bg__figure-inner">
+						<div class="bg__figure-img" style="background-image: url(./img/1.jpg)"></div>
+						<div class="bg__figure-reveal"></div>
 					</div>
 				</figure>
 			</div>
-			<div class="slide parallax-top">
-				<figure class="slide__figure">
-					<div class="slide__figure-inner">
-						<div class="slide__figure-img" style="background-image: url(img/2.jpg)"></div>
-						<div class="slide__figure-reveal"></div>
+			<div class="arrow-nav">
+				<div class="container">
+					<div class="row">
+						{{-- <div class="col-md-6 text-center text-md-left">
+							<a href="#" title="Twitter"><i class="fab fa-twitter-square" style="font-size: 2rem;"></i></a>
+		                    <a href="#" title="Facebook"><i class="fab fa-facebook-square" style="font-size: 2rem;"></i></i></a>        
+		                    <a href="#" title="Isnstagram"><i class="fab fa-instagram" style="font-size: 2rem;"></i></a>
+						</div> --}}
 					</div>
-				</figure>
-			</div>	
+				</div>
+			</div>
 		</div>
 	</div>
 

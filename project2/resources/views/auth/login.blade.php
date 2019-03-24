@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="section background-dark over-hide">
+    <div class="section background-black over-hide">
         <div class="form-center-section">
             <div class="container">
                 <div class="row justify-content-center">
@@ -17,7 +17,7 @@
                                 
                                 <div class="input-field">
                                     <label for="email">{{ __('Email') }}</label>
-                                    <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                    <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} color-white" name="email" value="{{ old('email') }}" required autofocus>
 
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
 
                                 <div class="input-field">
                                     <label for="password">{{ __('Password') }}</label>
-                                    <input id="password" type="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                    <input id="password" type="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }} color-white" name="password" required>
 
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
@@ -55,14 +55,6 @@
             </div>
         </div>
 
-        <div class="slideshow">
-            <div class="slide">
-                <figure class="slide__figure">
-                    <div class="slide__figure-inner">
-                        <div class="slide__figure-img" style="background-image: url(./img/home-background.jpg)"></div>
-                    </div>
-                </figure>
-            </div>
-        </div>
+        @include('layouts.background');
     </div>
 @endsection

@@ -29,17 +29,6 @@
 					</div>
 				</div>
 			</div>
-
-		
-
-			<div class="slideshow">
-				<div class="slide">
-					<figure class="slide__figure">
-						<div class="slide__figure-inner">
-							<div class="slide__figure-img" style="background-image: url(./img/home-background.jpg)"></div>
-						</div>
-					</figure>
-				</div>
-			</div>
+			@include('layouts.background');
 		</div>
 @endsection

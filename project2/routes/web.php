@@ -31,25 +31,11 @@ Route::get('about', [
 	'uses'=>'PageController@getAbout'
 ]);
 
-// Route::get('login', [
-// 	'as'=>'login',
-// 	'uses'=>'PageController@getLogin'
-// ]);
 
-// Route::post('login', [
-// 	'as'=>'login',
-// 	'uses'=>'PageController@postLogin'
-// ]);
-
-// Route::get('register', [
-// 	'as'=>'register',
-// 	'uses'=>'PageController@getRegister'
-// ]);
-
-// Route::post('register', [
-// 	'as'=>'register',
-// 	'uses'=>'PageController@postRegister'
-// ]);
+Route::get('myaccount',[
+	'as'=>'myaccount',
+	'uses'=>'PageController@getMyAccount'
+]);
 
 route::get('guestbooking', [
 	'as'=>'guestbooking',
@@ -57,3 +43,8 @@ route::get('guestbooking', [
 ]);
 
 Auth::routes();
+
+route::get('booking',[
+	'as'=>'booking',
+	'uses'=>'PageController@getBooking'
+]);

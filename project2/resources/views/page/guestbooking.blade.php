@@ -2,7 +2,7 @@
 @section('content')
 <!-- Primary Page Layout
 	================================================== -->
-		<div class="section background-dark over-hide">
+		<div class="section background-black over-hide">
 			<div class="form-center-section">
 				<div class="container">
 					<div class="row justify-content-center">
@@ -10,12 +10,12 @@
 							<div class="input-form">
 								<h1 class="text-center mb-4">Search for your reservation</h1>
 								<div class="input-field">
-									<input type="text" id="reservation-number" required>
+									<input type="text" id="reservation-number"  class="color-white" required>
 									<label for="reservation-number:">Reservation number: *</label>
 								</div>
 
 								<div class="input-field">
-									<input type="text" id="Surname-linked" required>
+									<input type="text" id="Surname-linked" class="color-white" required>
 									<label for="Surname-linked">Surname linked to the reservation: *</label>
 								</div>
 
@@ -54,17 +54,6 @@
 					</div>
 				</div>
 			</div>
-
-		
-
-			<div class="slideshow">
-				<div class="slide">
-					<figure class="slide__figure">
-						<div class="slide__figure-inner">
-							<div class="slide__figure-img" style="background-image: url(./img/home-background.jpg)"></div>
-						</div>
-					</figure>
-				</div>
-			</div>
+			@include('layouts.background');
 		</div>
 @endsection

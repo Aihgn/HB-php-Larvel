@@ -1,20 +1,7 @@
 @extends('layouts.app')
 @section('content')
-
-
-	<!-- Primary Page Layout
-	================================================== -->
 		
-		<div class="bg-img">
-			<div class="slide slide--current parallax-top">
-				<figure class="slide__figure">
-					<div class="slide__figure-inner">
-						<div class="slide__figure-img" style="background-image: url(./img/1.jpg)"></div>
-						<div class="slide__figure-reveal"></div>
-					</div>
-				</figure>
-			</div>
-		</div>
+	@include('layouts.backgroundcrop')
 	
 	<!-- Rooms
 		================================= -->

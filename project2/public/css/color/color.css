@@ -9,8 +9,10 @@
 .cbp-af-header.cbp-af-header-shrink .menu > ul > li > ul > li a:hover,
 .menu > ul > li > ul > li a:hover,
 .room-icons a:hover,
-a.call-top:hover,
-a.account-help,
+.call-top:hover,
+.account-help,
+.pill,
+#navbarDropdown,
 .input-field label,
 .footer-bottom .fa:hover,
 .account-top:hover,
@@ -119,6 +121,14 @@ figure.vimeo a:before, figure.youtube a:before {
 
 .input-field input{
 	border-bottom: 1px solid #ed254e;
+}
+
+.pill:hover{
+    background-color: #ed254e96;
+}
+
+.pill:focus,.tab_pill .active{
+    background-color: #ed254e;
 }
 
 
