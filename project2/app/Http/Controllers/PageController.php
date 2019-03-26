@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customer;
 use Auth;
+use App\RoomType;
+use App\Reservation;
 
 class PageController extends Controller
 {
@@ -34,7 +36,24 @@ class PageController extends Controller
     }
 
     public function getBooking(){
-        return view('page.booking');
+        $room = RoomType::all();
+        
+        return view('page.booking' ,compact('room'));
+    }
+
+    public function postBooking(Request $req){
+        // $this->validate(
+        // );
+        $reservation = new Reservation();
+        if (Auth::check()){
+            $reservation->id_customer= $id = Auth::user()->id;
+        }
+        $reservation->total='300';
+        $reservation->payment='null';             
+        $reservation->start_date = date('Y-m-d', strtotime($req->start));
+        $reservation->end_date = date('Y-m-d', strtotime($req->end));
+        $reservation->save();
+        return redirect()->back();
     }
         
 }

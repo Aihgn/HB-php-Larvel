@@ -48,3 +48,7 @@ route::get('booking',[
 	'as'=>'booking',
 	'uses'=>'PageController@getBooking'
 ]);
+ route::post('booking', [
+ 	'as'=>'booking',
+ 	'uses'=>'PageController@postBooking'
+ ]);

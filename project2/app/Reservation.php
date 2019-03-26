@@ -15,4 +15,6 @@ class reservation extends Model
     public function customer(){
     	return $this->belongsto('App\Customer','id_customer', 'id');
     }
+
+    public $timestamps = false;
 }

@@ -22,7 +22,7 @@
                                 </a>
 								<ul>
 									<li><a href="{{route('myaccount')}}"><i class="fas fa-user"></i>My Account</a></li>
-									<li><a href=""><i class="fas fa-ticket-alt"></i>My Booking</a></li>
+									<li><a href="{{route('myaccount',['#my_booking'])}}"><i class="fas fa-ticket-alt"></i>My Booking</a></li>
 									<li><a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i>
