@@ -15,4 +15,6 @@ class room extends Model
     public function reservation(){
     	return $this->hasMany('App\ReservationDetail', 'id_room', 'id');
     }
+    public $timestamps = false;
 }
+

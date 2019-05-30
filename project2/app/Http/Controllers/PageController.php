@@ -229,7 +229,7 @@ class PageController extends Controller
     public function getCheckin($id){
         Reservation::where('id_customer',$id)->update(array(
                         'status'=>'1',
-            ));
+            ));       
         return redirect()->back();
     }
 
@@ -292,6 +292,28 @@ class PageController extends Controller
             $id = $req->get('id');  
             $count =RoomType::where('id',$id)->get();           
             echo json_encode($count);
+        }
+    }
+
+    public function setUse(Request $req){
+        if($req->ajax())
+        {   
+            $id = $req->get('id');  
+            Room::where('id',$id)->update(array(
+                        'status'=>'1',
+            ));                    
+            echo json_encode($id);
+        }
+    }
+
+    public function setEmpty(Request $req){
+        if($req->ajax())
+        {   
+            $id = $req->get('id');  
+            Room::where('id',$id)->update(array(
+                        'status'=>'0',
+            ));                    
+            echo json_encode($id);
         }
     }
 }

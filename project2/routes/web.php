@@ -111,3 +111,13 @@ Route::get('book-off/count',[
 	'as'=>'book-off.action',
 	'uses'=>'PageController@getBookOffTotal'
 ]);
+
+Route::get('manager-room/setuse',[
+	'as'=>'setuse',
+	'uses'=>'PageController@setUse'
+]);
+
+Route::get('manager-room/setempty',[
+	'as'=>'setempty',
+	'uses'=>'PageController@setEmpty'
+]);
