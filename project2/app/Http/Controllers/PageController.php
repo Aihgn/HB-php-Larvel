@@ -219,28 +219,29 @@ class PageController extends Controller
     public function getAdmin(){
 
         $date = date('Y-m-d', strtotime(Carbon::now()));
+        // $res = Reservation::where('date_in',$date)->get();
         $res = DB::table('reservation')
         ->join('customer','customer.id','reservation.id_customer')
         ->where('reservation.date_in', '=',$date)
         ->get();
+        // dd($i);
         return view('page.index-admin',compact('res'));
     }
 
     public function getCheckin($id){
         Reservation::where('id_customer',$id)->update(array(
                         'status'=>'1',
-            ));       
+            ));
         return redirect()->back();
     }
 
-    public function getManagerRoom()
-    {
+    public function getManagerRoom(){
+
         $room = Room::all();
+        // dd($room);
         return view('page.manager-room',compact('room'));
     }
-
-    public function cancelReservation($id)
-    {
+    public function cancelReservation($id){
         $id_c = Auth::user()->id;
         // dd($id,$id_c);
         Reservation::where('id',$id)->where('id_customer',$id_c)->update(array(
@@ -249,6 +250,7 @@ class PageController extends Controller
         return redirect()->back();
         
     }
+
 
     public function getResInfo(Request $req)
     {        
@@ -292,28 +294,6 @@ class PageController extends Controller
             $id = $req->get('id');  
             $count =RoomType::where('id',$id)->get();           
             echo json_encode($count);
-        }
-    }
-
-    public function setUse(Request $req){
-        if($req->ajax())
-        {   
-            $id = $req->get('id');  
-            Room::where('id',$id)->update(array(
-                        'status'=>'1',
-            ));                    
-            echo json_encode($id);
-        }
-    }
-
-    public function setEmpty(Request $req){
-        if($req->ajax())
-        {   
-            $id = $req->get('id');  
-            Room::where('id',$id)->update(array(
-                        'status'=>'0',
-            ));                    
-            echo json_encode($id);
         }
     }
 }

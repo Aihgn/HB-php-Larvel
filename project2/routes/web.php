@@ -92,6 +92,7 @@ Route::get('cancel-reservation/{id}',[
 	'uses'=>'PageController@cancelReservation'
 ]);
 
+
 Route::get('pick-date',[
 	'as'=>'admin.action',
 	'uses'=>'PageController@getResInfo'
@@ -110,14 +111,4 @@ Route::post('book-off',[
 Route::get('book-off/count',[
 	'as'=>'book-off.action',
 	'uses'=>'PageController@getBookOffTotal'
-]);
-
-Route::get('manager-room/setuse',[
-	'as'=>'setuse',
-	'uses'=>'PageController@setUse'
-]);
-
-Route::get('manager-room/setempty',[
-	'as'=>'setempty',
-	'uses'=>'PageController@setEmpty'
 ]);

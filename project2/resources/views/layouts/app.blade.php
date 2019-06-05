@@ -13,9 +13,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/plugins.js') }}" defer></script>
     <script src="{{ asset('js/custom.js') }}" defer></script>
-    <script src="{{ asset('js/jquery.min.js') }}" defer></script>
-    <script src="{{ asset('js/boostrap.min.js') }}" defer></script>
-    <script src="{{ asset('js/boostrap.js') }}" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><!--Jquery-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script><!--boostrap-->
     
@@ -35,9 +32,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-grid.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-reboot.css') }}" rel="stylesheet">
     <!-- Boostrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
