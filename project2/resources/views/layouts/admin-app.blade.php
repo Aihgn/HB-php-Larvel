@@ -169,9 +169,7 @@
                     <div class="account-wrap">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><strong>{{ Auth::user()->name }}</strong>  <span class="caret"></span>
                         </a>
-                        <ul>
-                            <li><a href="{{route('myaccount')}}"><i class="fas fa-user"></i>My Account</a></li>
-                            <li><a href="{{route('myaccount',['#my_booking'])}}"><i class="fas fa-ticket-alt"></i>My Booking</a></li>
+                        <ul>                            
                             <li><a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i>
@@ -192,7 +190,8 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav col-12 col-md-3 col-lg-2">
                 <li class="sidebar-brand"> <a href="{{route('admin')}}">Home</a> </li>
-                <li> <a href="#">Booking</a> </li>
+                <li> <a href="#">Manager Account</a> </li>
+                <li> <a href="#">Book room</a> </li>
                 <li> <a href="#">Check-in</a> </li>
                 <li> <a href="#">Check-out</a> </li>
                 <li> <a href="#">Revenue Statistics</a> </li>

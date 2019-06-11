@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Lang;
 use Illuminate\Http\Request;
+use App\Role;
 
 class RegisterController extends Controller
 {
@@ -74,7 +75,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-
+        $user->roles()->attach(Role::where('name', 'customer')->first());
         $id = $user->id;
         Customer::create([
             'name' => $data['name'],

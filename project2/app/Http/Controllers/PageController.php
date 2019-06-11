@@ -19,6 +19,16 @@ use App\Room;
 
 class PageController extends Controller
 {
+    // /**
+    //  * Create a new controller instance.
+    //  *
+    //  * @return void
+    //  */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+    
     public function getIndex(){
         $room = RoomType::all();
         return view('page.index', compact('room'));
@@ -37,14 +47,12 @@ class PageController extends Controller
         return view('page.guestbooking');
     }
 
-    public function getMyAccount(){
-        if (Auth::check())
-        {
-            $id = Auth::user()->id;
-            $acc_info = Customer::where('id_user',$id)->get();   
-            $booking_info = Reservation::where('id_customer',$id)->get();
-            return view('page.myaccount', compact('acc_info','booking_info'));
-        } 
+    public function getMyAccount()
+    {       
+        $id = Auth::user()->id;
+        $acc_info = Customer::where('id_user',$id)->get();   
+        $booking_info = Reservation::where('id_customer',$id)->get();
+        return view('page.myaccount', compact('acc_info','booking_info'));        
     }
 
     public function postMyAccount(Request $req)
@@ -121,7 +129,8 @@ class PageController extends Controller
         
     }
 
-    public function getBooking(){
+    public function getBooking()
+    {
         $room = RoomType::all();
         if (Auth::check())
         {
@@ -134,7 +143,8 @@ class PageController extends Controller
         return view('page.booking', compact('room'));
     }
 
-    public function postBooking(Request $req){
+    public function postBooking(Request $req)
+    {
         $reservation = new Reservation();        
         if (Auth::check()){
             $reservation->id_customer= Auth::user()->id;
@@ -216,16 +226,25 @@ class PageController extends Controller
         }
     }
 
-    public function getAdmin(){
 
-        $date = date('Y-m-d', strtotime(Carbon::now()));
-        // $res = Reservation::where('date_in',$date)->get();
-        $res = DB::table('reservation')
-        ->join('customer','customer.id','reservation.id_customer')
-        ->where('reservation.date_in', '=',$date)
-        ->get();
-        // dd($i);
-        return view('page.index-admin',compact('res'));
+    //Admin
+    public function getAdmin(Request $req)
+    {
+        if (Auth::check())
+        {
+            $req->user()->authorizeRoles(['receptionist', 'admin']);
+            $date = date('Y-m-d', strtotime(Carbon::now()));
+            // $res = Reservation::where('date_in',$date)->get();
+            $res = DB::table('reservation')
+            ->join('customer','customer.id','reservation.id_customer')
+            ->where('reservation.date_in', '=',$date)
+            ->get();
+            // dd($i);
+            return view('page.index-admin',compact('res'));
+        }else
+        {
+            return view('errors.auth');
+        }
     }
 
     public function getCheckin($id){

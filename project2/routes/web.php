@@ -35,7 +35,7 @@ Route::get('about', [
 Route::get('myaccount',[
 	'as'=>'myaccount',
 	'uses'=>'PageController@getMyAccount'
-]);
+])->middleware('auth');
 
 Route::post('myaccount',[
 	'as'=>'myaccount',
@@ -76,22 +76,22 @@ Route::get('/booking/remove_room',[
 Route::get('admin',[
 	'as'=>'admin',
 	'uses'=>'PageController@getAdmin'
-]);
+])->middleware('auth');
 
 Route::get('admin/{id}',[
 	'as'=>'check-in',
 	'uses'=>'PageController@getCheckin'
-]);
+])->middleware('auth');
 
 Route::get('manager-room',[
 	'as'=>'manager-room',
 	'uses'=>'PageController@getManagerRoom'
-]);
+])->middleware('auth');
+
 Route::get('cancel-reservation/{id}',[
 	'as'=>'cancel-res',
 	'uses'=>'PageController@cancelReservation'
 ]);
-
 
 Route::get('pick-date',[
 	'as'=>'admin.action',
@@ -101,7 +101,7 @@ Route::get('pick-date',[
 Route::get('book-off',[
 	'as'=>'book-off',
 	'uses'=>'PageController@getBookOff'
-]);
+])->middleware('auth');
 
 Route::post('book-off',[
 	'as'=>'book-off',
