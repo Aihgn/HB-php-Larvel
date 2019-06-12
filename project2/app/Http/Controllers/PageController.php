@@ -3,32 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Customer;
-use Auth;
-use App\RoomType;
-use App\Reservation;
-use Session;
-use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\MessageBag;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Room;
+use Session;
+use Auth;
+use App\Customer;
+use App\RoomType;
+use App\Reservation;
+use App\User;
 
 
 class PageController extends Controller
-{
-    // /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-    
+{    
+    //page
     public function getIndex(){
         $room = RoomType::all();
         return view('page.index', compact('room'));
@@ -47,6 +36,7 @@ class PageController extends Controller
         return view('page.guestbooking');
     }
 
+    //user
     public function getMyAccount()
     {       
         $id = Auth::user()->id;
@@ -56,8 +46,7 @@ class PageController extends Controller
     }
 
     public function postMyAccount(Request $req)
-    {  
-        
+    {          
         $id_user = Auth::id();
         $user=User::findOrFail($id_user);
         if(Hash::check($req->password, $user->password)){
@@ -160,159 +149,7 @@ class PageController extends Controller
         $reservation->date_in = date('Y-m-d', strtotime($req->start));
         $reservation->date_out = date('Y-m-d', strtotime($req->end));
         $reservation->save();
-        return redirect()->back();
+        return redirect('/');
     }
-
-    public function addRoom(Request $req)
-    {        
-        if($req->ajax())
-        {   
-            $output1='';
-            $output2='';
-            $id = $req->get('id');
-            $roomID = $req->get('roomIDp');
-            $calDate = $req->get('calDate');
-            $room = RoomType::find($id);
-
-            $req->session()->push('cart.id', $id);
-            
-            $output1 .='
-                <div class="card m-2 p-0">                             
-                    <div class="card-horizontal">
-                        <div class="img-square-wrapper">
-                            <img class="room-img-cart" src="img/'.$room->image.'" alt="Card image cap">
-                        </div>
-                        <div class="card-body p-0">                                 
-                            <span class="col-6 pt-4">'.$room->name.'</span>
-                            
-                            <a href="#" class="remove-room col-4 pt-3 ml-5 " id="roomid'.$roomID.''.$id.'"><ion-icon name="close" style="font-size: 40px; color:#000;"></ion-icon></a>                
-                        </div>
-                    </div>      
-                </div>
-            ';
-            $output2 .='
-                <div class="roomid'.$roomID.''.$id.'" id="roomid'.$roomID.''.$id.'">
-                    <table>
-                        <tr>
-                            <td class="text-left"><span>'.$room->name.'</span></td>
-                            <td><span class="mr-4"> x '.$calDate.' night</span></td>
-                            <td class="text-right"><span class="ml-5">$'.$room->price*$calDate.'</span></td>
-                        </tr>
-                    </table>
-                </div>
-            ';
-            $room_price=$room->price*$calDate;
-            $data = array(
-                "room" => $output1,
-                "detail" =>$output2,    
-                "room_price"=>$room_price,
-            );
-            echo json_encode($data);
-        }
-    }
-
-    public function removeRoom(Request $req)
-    {        
-        if($req->ajax())
-        {   
-            $id = $req->get('id');            
-            $calDate = $req->get('calDate');
-            $room = RoomType::find($id);           
-            $roomPrice=$room->price*$calDate;
-            $data = array(                 
-                "room_price"=>$roomPrice,
-            );
-            echo json_encode($data);
-        }
-    }
-
-
-    //Admin
-    public function getAdmin(Request $req)
-    {
-        if (Auth::check())
-        {
-            $req->user()->authorizeRoles(['receptionist', 'admin']);
-            $date = date('Y-m-d', strtotime(Carbon::now()));
-            // $res = Reservation::where('date_in',$date)->get();
-            $res = DB::table('reservation')
-            ->join('customer','customer.id','reservation.id_customer')
-            ->where('reservation.date_in', '=',$date)
-            ->get();
-            // dd($i);
-            return view('page.index-admin',compact('res'));
-        }else
-        {
-            return view('errors.auth');
-        }
-    }
-
-    public function getCheckin($id){
-        Reservation::where('id_customer',$id)->update(array(
-                        'status'=>'1',
-            ));
-        return redirect()->back();
-    }
-
-    public function getManagerRoom(){
-
-        $room = Room::all();
-        // dd($room);
-        return view('page.manager-room',compact('room'));
-    }
-    public function cancelReservation($id){
-        $id_c = Auth::user()->id;
-        // dd($id,$id_c);
-        Reservation::where('id',$id)->where('id_customer',$id_c)->update(array(
-                        'status'=>2,
-            ));
-        return redirect()->back();
-        
-    }
-
-
-    public function getResInfo(Request $req)
-    {        
-        if($req->ajax())
-        {   
-            $date = date('Y-m-d', strtotime($req->get('date')));
-            $res = DB::table('reservation')
-            ->join('customer','customer.id','reservation.id_customer')
-            ->where('reservation.date_in', '=',$date)
-            ->get();           
-            echo json_encode($res);
-        }
-    }
-
-    public function getBookOff(){
-        $room =Room::all();
-        return view('page.book-off',compact('room'));
-    }
-
-    public function postBookOff(Request $req){
-        $reservation = new Reservation();        
-        
-        $customer = new Customer();
-        $customer->name = $req->name;
-        $customer->email = $req->email;
-        $customer->phone_number = $req->phone_number;
-        $customer->save();
-        $reservation->id_customer = $customer->id;
-        
-        $reservation->total=$req->total;            
-        $reservation->date_in = date('Y-m-d', strtotime($req->start));
-        $reservation->date_out = date('Y-m-d', strtotime($req->end));
-        $reservation->save();
-        return redirect()->back();
-    }
-
-
-     public function getBookOffTotal(Request $req){
-        if($req->ajax())
-        {   
-            $id = $req->get('id');  
-            $count =RoomType::where('id',$id)->get();           
-            echo json_encode($count);
-        }
-    }
+    
 }

@@ -159,7 +159,7 @@
                 <a class="navbar-brand" href="#">Admin</a>
             </div>
             
-            <div class="col-8 col-md-10 text-right">
+            <div class="col-8 col-md-9 text-right">
                 @guest
                     <div class="px-0 px-md-3 pl-1 py-3">
                         <a href="#" class="account-top">log in</a>
@@ -194,8 +194,6 @@
                 <li> <a href="#">Book room</a> </li>
                 <li> <a href="#">Check-in</a> </li>
                 <li> <a href="#">Check-out</a> </li>
-                <li> <a href="#">Revenue Statistics</a> </li>
-                <li> <a href="#">Booking rate</a> </li>
                 <li> <a href="{{route('manager-room')}}">Manager room</a> </li>
             </ul>
         </div>

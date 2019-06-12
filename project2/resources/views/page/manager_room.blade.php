@@ -1,4 +1,4 @@
-@extends('layouts.admin-app')
+@extends('layouts.admin_app')
 @section('content')
 	<style type="text/css">
 		.main{

@@ -11,6 +11,7 @@
 |
 */
 
+//page
 Route::get('/', [
 	'as'=>'home',
 	'uses'=>'PageController@getIndex'
@@ -31,7 +32,7 @@ Route::get('about', [
 	'uses'=>'PageController@getAbout'
 ]);
 
-
+//user
 Route::get('myaccount',[
 	'as'=>'myaccount',
 	'uses'=>'PageController@getMyAccount'
@@ -65,50 +66,51 @@ route::post('booking', [
 
 Route::get('/booking/add_room',[
 	'as'=>'add_room.action',
-	'uses'=>'PageController@addRoom'
+	'uses'=>'AjaxController@addRoom'
 ]);
 
 Route::get('/booking/remove_room',[
 	'as'=>'remove_room.action',
-	'uses'=>'PageController@removeRoom'
+	'uses'=>'AjaxController@removeRoom'
 ]);
 
+//admin
 Route::get('admin',[
 	'as'=>'admin',
-	'uses'=>'PageController@getAdmin'
+	'uses'=>'AdminController@getAdmin'
 ])->middleware('auth');
 
 Route::get('admin/{id}',[
 	'as'=>'check-in',
-	'uses'=>'PageController@getCheckin'
+	'uses'=>'AdminController@getCheckin'
 ])->middleware('auth');
 
 Route::get('manager-room',[
 	'as'=>'manager-room',
-	'uses'=>'PageController@getManagerRoom'
+	'uses'=>'AdminController@getManagerRoom'
 ])->middleware('auth');
 
 Route::get('cancel-reservation/{id}',[
 	'as'=>'cancel-res',
-	'uses'=>'PageController@cancelReservation'
+	'uses'=>'AdminController@cancelReservation'
 ]);
 
 Route::get('pick-date',[
 	'as'=>'admin.action',
-	'uses'=>'PageController@getResInfo'
+	'uses'=>'AjaxController@getResInfo'
 ]);
 
 Route::get('book-off',[
 	'as'=>'book-off',
-	'uses'=>'PageController@getBookOff'
+	'uses'=>'AdminController@getBookOff'
 ])->middleware('auth');
 
 Route::post('book-off',[
 	'as'=>'book-off',
-	'uses'=>'PageController@postBookOff'
+	'uses'=>'AdminController@postBookOff'
 ]);
 
 Route::get('book-off/count',[
 	'as'=>'book-off.action',
-	'uses'=>'PageController@getBookOffTotal'
+	'uses'=>'AjaxController@getBookOffTotal'
 ]);
