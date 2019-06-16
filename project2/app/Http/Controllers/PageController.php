@@ -32,8 +32,8 @@ class PageController extends Controller
         return view('page.about');
     }
 
-    public function getGuestBooking(){
-        return view('page.guestbooking');
+    public function getSearchRes(){
+        return view('page.search_reservation');
     }
 
     //user

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Room;
+use App\Role;
 
 class AdminController extends Controller
 {
@@ -22,19 +23,11 @@ class AdminController extends Controller
     //Admin
     public function getAdmin(Request $req)
     {
-        $req->user()->authorizeRoles(['receptionist', 'admin']);
-        $date = date('Y-m-d', strtotime(Carbon::now()));
-        // $res = Reservation::where('date_in',$date)->get();
-        $res = DB::table('reservation')
-        ->join('customer','customer.id','reservation.id_customer')
-        ->where('reservation.date_in', '=',$date)
-        ->get();
-        return view('page.index_admin',compact('res'));
-        
-        
+        $req->user()->authorizeRoles(['receptionist', 'admin']);        
+        return view('page.index_admin');
     }
 
-    public function getCheckin($id)
+    public function getCheckin1($id)
     {
         Reservation::where('id_customer',$id)->update(array(
                         'status'=>'1',
@@ -42,17 +35,40 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function getManagerAcc(Request $req)
+    {
+        $req->user()->authorizeRoles('admin');
+        $acc = DB::table('roles')
+        ->join('role_user','roles.id','=','role_user.role_id')
+        ->join('users','users.id','=','role_user.user_id')
+        ->where('role_user.role_id', '=',3)
+        ->orWhere('role_user.role_id', '=',2)
+        ->orderBy('role_user.role_id', 'desc')
+        ->get();   
+        return view('page.manager_account',compact('acc'));
+    }
+
+    public function getCheckin(Request $req)
+    {
+        $req->user()->authorizeRoles(['receptionist', 'admin']);
+        $date = date('Y-m-d', strtotime(Carbon::now()));
+        $res = DB::table('reservation')
+        ->join('customer','customer.id','reservation.id_customer')
+        ->where('reservation.date_in', '=',$date)
+        ->get();
+        return view('page.check_in',compact('res'));
+    }
+
+
     public function getManagerRoom()
     {
 
         $room = Room::all();
-        // dd($room);
         return view('page.manager_room',compact('room'));
     }
     public function cancelReservation($id)
     {
         $id_c = Auth::user()->id;
-        // dd($id,$id_c);
         Reservation::where('id',$id)->where('id_customer',$id_c)->update(array(
                         'status'=>2,
             ));
