@@ -42,7 +42,7 @@ class PageController extends Controller
         $id = Auth::user()->id;
         $acc_info = Customer::where('id_user',$id)->get();   
         $booking_info = Reservation::where('id_customer',$id)->get();
-        return view('page.myaccount', compact('acc_info','booking_info'));        
+        return view('page.my_account', compact('acc_info','booking_info'));        
     }
 
     public function postMyAccount(Request $req)
@@ -114,7 +114,16 @@ class PageController extends Controller
                     'msg' => $errors,
                 ]);
             }
-        }
+        }        
+    }
+
+    public function cancelReservation($id)
+    {
+        $id_c = Auth::user()->id;
+        Reservation::where('id',$id)->where('id_customer',$id_c)->update(array(
+                        'status'=>2,
+            ));
+        return redirect()->back();
         
     }
 

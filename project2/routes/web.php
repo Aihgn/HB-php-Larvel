@@ -20,6 +20,8 @@ Route::get('rooms', 'PageController@getRooms')->name('rooms');
 
 Route::get('about', 'PageController@getAbout')->name('about');
 
+Route::get('search-res', 'PageController@getSearchRes')->name('search_res');
+
 Auth::routes();
 
 //user
@@ -29,79 +31,40 @@ Route::post('myaccount', 'PageController@postMyAccount')->name('myaccount');
 
 Route::post('myaccount/change-password', 'PageController@changePassword')->name('change-password')->middleware('auth');
 
-Route::get('search-res', 'PageController@getSearchRes')->name('search-res');
+Route::get('myaccount/cancel-reservation/{id}', 'PageController@cancelReservation')->name('cancel-res')->middleware('auth');
 
-Route::get('search-res', 'PageController@getSearchRes')->name('search-res');
+Route::get('booking', 'PageController@getBooking')->name('booking');
 
+Route::post('booking', 'PageController@postBooking')->name('booking');
 
-route::get('booking',[
-	'as'=>'booking',
-	'uses'=>'PageController@getBooking'
-]);
-route::post('booking', [
-	'as'=>'booking',
-	'uses'=>'PageController@postBooking'
-]);
+Route::get('/booking/add_room', 'AjaxController@addRoom')->name('add_room.action');
 
-Route::get('/booking/add_room',[
-	'as'=>'add_room.action',
-	'uses'=>'AjaxController@addRoom'
-]);
-
-Route::get('/booking/remove_room',[
-	'as'=>'remove_room.action',
-	'uses'=>'AjaxController@removeRoom'
-]);
+Route::get('/booking/remove_room', 'AjaxController@removeRoom')->name('remove_room.action');
 
 //admin
-Route::get('admin',[
-	'as'=>'admin',
-	'uses'=>'AdminController@getAdmin'
-])->middleware('auth');
+Route::get('admin', 'AdminController@getAdmin')->name('admin')->middleware('auth');
 
+Route::get('admin/manager-account', 'AdminController@getManagerAcc')->name('manager_acc');
 
+Route::get('admin/manager-account/live_search', 'AjaxController@liveSearch')->name('live_search');
 
-Route::get('/manager-account',[
-	'as'=>'manager_acc',
-	'uses'=>'AdminController@getManagerAcc'
-]);
+Route::post('admin/manager-account/add-role', 'AjaxController@addRole')->name('add_role');
 
-Route::get('/live_search',[
-	'as'=>'live_search',
-	'uses'=>'AjaxController@liveSearch'
-]);
-
-Route::post('/admin/add-role', 'AjaxController@addRole')->name('add_role');
-
-Route::post('/manager-account/remove-role',[
-	'as'=>'remove_role',
-	'uses'=>'AjaxController@removeRole'
-]);
+Route::post('admin/manager-account/remove-role', 'AjaxController@removeRole')->name('remove_role');
 
 Route::post('/admin/del-acc', 'AjaxController@deleteAccount')->name('delete_acc');
 
 Route::get('/admin/get-acc', 'AjaxController@getAccount')->name('get_account');
 
-Route::get('manager-room',[
-	'as'=>'manager_room',
-	'uses'=>'AdminController@getManagerRoom'
-])->middleware('auth');
+Route::get('/admin/manager-room', 'AdminController@getManagerRoom')->name('manager_room')->middleware('auth');
 
-Route::get('check-in',[
-	'as'=>'check_in',
-	'uses'=>'AdminController@getCheckin'
-])->middleware('auth');
+Route::get('/admin/check-in', 'AdminController@getCheckin')->name('check_in')->middleware('auth');
 
 Route::get('admin/{id}',[
 	'as'=>'check-in',
 	'uses'=>'AdminController@getCheckin1'
 ])->middleware('auth');
 
-
-Route::get('cancel-reservation/{id}',[
-	'as'=>'cancel-res',
-	'uses'=>'AdminController@cancelReservation'
-]);
 
 Route::get('pick-date',[
 	'as'=>'admin.action',

@@ -66,15 +66,7 @@ class AdminController extends Controller
         $room = Room::all();
         return view('page.manager_room',compact('room'));
     }
-    public function cancelReservation($id)
-    {
-        $id_c = Auth::user()->id;
-        Reservation::where('id',$id)->where('id_customer',$id_c)->update(array(
-                        'status'=>2,
-            ));
-        return redirect()->back();
-        
-    }
+    
 
     public function getBookOff()
     {

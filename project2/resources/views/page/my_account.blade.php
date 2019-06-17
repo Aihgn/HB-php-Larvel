@@ -102,7 +102,7 @@
 		                        			
 	                        				@if($b_i->status == 0)
 	                        					<td><span class="stt-p p-2">Pending</span></td>
-	                        					<td class="p-1"><a onclick="return confirm('Are you sure?')" href="{{route('cancel-res',$b_i->id)}}" class="bttn btn-invert pb-2 pt-2 pl-1 pr-1 cancel-res">Cancel</a></td>
+	                        					<td class="p-1"><a onclick="return confirm('Are you sure?')" href="{{route('cancel-res',$b_i->id)}}" class="btn btn-danger pb-2 pt-2 pl-1 pr-1 cancel-res">Cancel</a></td>
 	                        				@elseif($b_i->status ==2)
 	                        					<td><span class="stt-c p-2">Cancel</span></td>
 	                        					<td></td>

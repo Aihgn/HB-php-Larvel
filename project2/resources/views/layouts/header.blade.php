@@ -14,7 +14,7 @@
 						<div class="px-0 px-md-3 pl-1 py-3">
 							<a href="{{route('login')}}" class="account-top">log in</a>
 							<a href="{{route('register')}}" class="account-top">register</a>
-							<a href="{{route('guestbooking')}}" class="account-top">My bookings</a>
+							<a href="{{route('search_res')}}" class="account-top">My bookings</a>
 						</div>
 						@else	
                             <div class="account-wrap">

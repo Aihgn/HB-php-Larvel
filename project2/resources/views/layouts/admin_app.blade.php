@@ -13,10 +13,14 @@
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 
     <!-- Styles -->
     <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/color/color.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <!-- Boostrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -67,10 +71,10 @@
             </ul>
         </div>
     </div>
-    <div class="col-10 content"> @yield('content') </div>
+    <div class="col-12 col-md-10 content"> @yield('content') </div>
 
     
-    <div class="scroll-to-top" style="background-image: url('img/arrow-up.svg');"></div>
+    {{-- <div class="scroll-to-top" style="background-image: url('img/arrow-up.svg');"></div> --}}
     
 <script>
     $(function(){

@@ -87,9 +87,9 @@ option{
 }
 
 #sidebar-wrapper {
-  position: fixed;
+  position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin-right: -250px;
   overflow-y: auto;
   -webkit-transition: all 0.5s ease;
@@ -202,10 +202,56 @@ option{
   border: none!important;
 }
 
-/**/
+/*date ranger picker*/
+.daterangepicker{
+  background-color: #343a40!important;
+  border-radius: 0px!important;
+}
 
+.daterangepicker .calendar-table {
+    border: none!important;
+    border-radius: 0px!important;
+    background-color: #343a40!important;
+}
+.daterangepicker td.disabled, .daterangepicker option.disabled {
+    color: #999!important;
+}
+.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
+    background-color: #343a40!important;
+    border-color: transparent!important;
+}
+.daterangepicker td.available:hover, .daterangepicker th.available:hover {
+    background-color: #ed254e!important;
+    border-color: transparent!important;
+    color: inherit;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #ed254e!important;
+    border-color: transparent!important;
+    color: #fff!important;
+}
+.daterangepicker td.available:hover, .daterangepicker th.available:hover {
+    background-color: #ed254e!important;
+    border-color: transparent!important;
+    color: inherit;
+}
 
-
+.daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span {
+    color: #fff!important;
+    border: solid white!important;
+    border-width: 0 2px 2px 0!important;
+}
+.daterangepicker td.in-range {
+    background-color: #ed254ea3!important;
+    color: #fff!important;
+}
+.cancelBtn{
+  color: #fff!important;
+}
+.applyBtn{
+ background-color: #ed254e!important;
+ border: none!important;
+}
 /**/
 
 .content-add-new {
