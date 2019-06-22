@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="card mt-3 p-2">       
-        <h5 class="m-2 ">Pick date check-in</h5> 
+        <h5 class="m-2 ">Pick date check-out</h5> 
         <div class="col-3 m-3 ">
             <div class="row mb-4 input-field">
             <input type="text" id="date" name="date_pick" id="date"  value="" placeholder="" />
@@ -32,9 +32,9 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function(){
-            function fetch_res_in(){  
+            function fetch_res_out(){  
                 var date = $("#date").val();
-                var stt=0;
+                var stt=1;
                 $.ajax({
                     url:"{{route('res.pick-date')}}",
                     method:'GET',
@@ -46,40 +46,23 @@
                     }
                 });                
             };
-            $(document).on("change", "#date", function (){  
-                fetch_res_in();
+            $(document).on("change", "#date", function(){  
+                fetch_res_out();
             });
 
-            $(document).on("click", ".btn-check-in", function(){
+            $(document).on("click", ".btn-check-out", function(){
                 var id = this.id;
                 $.ajax({
-                    url:"{{route('check_in.action')}}",
+                    url:"{{route('check_out.action')}}",
                     method:'GET',
                     data:{id:id},
                     dataType: 'json',
                     success:function(data)
-                    {       
-                        // $("#tb-res-info").html(data);
+                    {    
                     }
                 });
-                fetch_res_in();
+                fetch_res_out();
             });
-
-            $(document).on("click", ".btn-cancel", function(){
-                var id = this.id;
-                $.ajax({
-                    url:"{{route('ci.cancel')}}",
-                    method:'GET',
-                    data:{id:id},
-                    dataType: 'json',
-                    success:function(data)
-                    {       
-                        // $("#tb-res-info").html(data);
-                    }
-                }); 
-                fetch_res_in();
-            });
-
 
             $(function() {               
                 $('input[name="date_pick"]').daterangepicker({

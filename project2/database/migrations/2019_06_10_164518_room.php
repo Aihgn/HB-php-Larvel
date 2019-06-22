@@ -16,7 +16,7 @@ class Room extends Migration
         Schema::create('room', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_type')->unsigned();
-            $table->integer('status')->default(0)->comment('0: empty, 1:used');
+            $table->integer('status')->default(0)->comment('0:empty, 1:used, 2:booked');
             $table->date('expiry_date')->nullable();                  
             $table->timestamps();
         });

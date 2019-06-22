@@ -252,9 +252,19 @@ option{
  background-color: #ed254e!important;
  border: none!important;
 }
-/**/
+/*collapse*/
 
-.content-add-new {
-          display: none;
-          padding : 5px;
-      }
+.content-collapse {
+  display: none;
+  padding : 5px;
+}
+
+/*modal*/
+
+.modal-content{
+  background-color: #343a40!important;
+}
+
+.close, .close:hover {
+    color: #fff0!important;
+}

@@ -15,4 +15,6 @@ class customer extends Model
     public function reservation(){
     	return $this->hasMany('App\Reservation','id_customer', 'id');
     }
+
+    public $timestamps = true;
 }

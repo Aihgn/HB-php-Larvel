@@ -16,5 +16,5 @@ class reservation_detail extends Model
     	return $this->belongsto('App\Reservation','id_reservation', 'id');
     }
 
-
+    public $timestamps = true;
 }

@@ -15,6 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 
     <!-- Styles -->
@@ -62,11 +63,12 @@
     <div id="wrapper" class="toggled background-dark">
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav col-12 col-md-3 col-lg-2">
-                <li> <a href="{{route('admin')}}">Dashboard</a> </li>
-                <li> <a href="{{route('manager_acc')}}">Manager Account</a> </li>
+                <li> <a href="{{route('admin')}}">Dashboard</a> </li>               
                 <li> <a href="{{route('book_off')}}">Book room</a> </li>
                 <li> <a href="{{route('check_in')}}">Check-in</a> </li>
-                <li> <a href="#">Check-out</a> </li>
+                <li> <a href="{{route('check_out')}}">Check-out</a> </li>
+                <li> <a href="{{route('all_res')}}">Reservation</a> </li>
+                <li> <a href="{{route('manager_acc')}}">Manager Account</a> </li>
                 <li> <a href="{{route('manager_room')}}">Manager room</a> </li>
             </ul>
         </div>

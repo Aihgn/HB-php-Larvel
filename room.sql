@@ -1,0 +1,131 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th6 18, 2019 lúc 08:57 PM
+-- Phiên bản máy phục vụ: 10.1.38-MariaDB
+-- Phiên bản PHP: 7.3.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Cơ sở dữ liệu: `db_hotelbooking`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `room`
+--
+
+
+--
+-- Đang đổ dữ liệu cho bảng `room`
+--
+
+INSERT INTO `room` (`id`, `id_type`, `status`, `expiry_date`, `created_at`, `updated_at`) VALUES
+(2001, 1, 0, NULL, NULL, NULL),
+(2002, 1, 0, NULL, NULL, NULL),
+(2003, 1, 0, NULL, NULL, NULL),
+(2004, 2, 0, NULL, NULL, NULL),
+(2005, 2, 0, NULL, NULL, NULL),
+(2006, 3, 0, NULL, NULL, NULL),
+(2007, 3, 0, NULL, NULL, NULL),
+(2008, 4, 0, NULL, NULL, NULL),
+(2009, 4, 0, NULL, NULL, NULL),
+(2010, 4, 0, NULL, NULL, NULL),
+(3001, 1, 0, NULL, NULL, NULL),
+(3002, 1, 0, NULL, NULL, NULL),
+(3003, 1, 0, NULL, NULL, NULL),
+(3004, 2, 0, NULL, NULL, NULL),
+(3005, 2, 0, NULL, NULL, NULL),
+(3006, 3, 0, NULL, NULL, NULL),
+(3007, 3, 0, NULL, NULL, NULL),
+(3008, 4, 0, NULL, NULL, NULL),
+(3009, 4, 0, NULL, NULL, NULL),
+(3010, 4, 0, NULL, NULL, NULL),
+(4001, 1, 0, NULL, NULL, NULL),
+(4002, 1, 0, NULL, NULL, NULL),
+(4003, 1, 0, NULL, NULL, NULL),
+(4004, 2, 0, NULL, NULL, NULL),
+(4005, 2, 0, NULL, NULL, NULL),
+(4006, 3, 0, NULL, NULL, NULL),
+(4007, 3, 0, NULL, NULL, NULL),
+(4008, 4, 0, NULL, NULL, NULL),
+(4009, 4, 0, NULL, NULL, NULL),
+(4010, 4, 0, NULL, NULL, NULL),
+(5001, 1, 0, NULL, NULL, NULL),
+(5002, 1, 0, NULL, NULL, NULL),
+(5003, 1, 0, NULL, NULL, NULL),
+(5004, 2, 0, NULL, NULL, NULL),
+(5005, 2, 0, NULL, NULL, NULL),
+(5006, 2, 0, NULL, NULL, NULL),
+(5007, 3, 0, NULL, NULL, NULL),
+(5008, 3, 0, NULL, NULL, NULL),
+(5009, 4, 0, NULL, NULL, NULL),
+(5010, 4, 0, NULL, NULL, NULL),
+(6001, 1, 0, NULL, NULL, NULL),
+(6002, 1, 0, NULL, NULL, NULL),
+(6003, 2, 0, NULL, NULL, NULL),
+(6004, 2, 0, NULL, NULL, NULL),
+(6005, 3, 0, NULL, NULL, NULL),
+(6006, 3, 0, NULL, NULL, NULL),
+(6007, 3, 0, NULL, NULL, NULL),
+(6008, 4, 0, NULL, NULL, NULL),
+(6009, 4, 0, NULL, NULL, NULL),
+(6010, 4, 0, NULL, NULL, NULL),
+(7001, 1, 0, NULL, NULL, NULL),
+(7002, 1, 0, NULL, NULL, NULL),
+(7003, 2, 0, NULL, NULL, NULL),
+(7004, 2, 0, NULL, NULL, NULL),
+(7005, 2, 0, NULL, NULL, NULL),
+(7006, 3, 0, NULL, NULL, NULL),
+(7007, 3, 0, NULL, NULL, NULL),
+(7008, 3, 0, NULL, NULL, NULL),
+(7009, 4, 0, NULL, NULL, NULL),
+(7010, 4, 0, NULL, NULL, NULL),
+(8001, 2, 0, NULL, NULL, NULL),
+(8002, 2, 0, NULL, NULL, NULL),
+(8003, 3, 0, NULL, NULL, NULL),
+(8004, 3, 0, NULL, NULL, NULL),
+(8005, 2, 0, NULL, NULL, NULL),
+(8006, 4, 0, NULL, NULL, NULL),
+(8007, 1, 0, NULL, NULL, NULL),
+(8008, 1, 0, NULL, NULL, NULL),
+(8009, 2, 0, NULL, NULL, NULL),
+(8010, 2, 0, NULL, NULL, NULL),
+(9001, 2, 0, NULL, NULL, NULL),
+(9002, 2, 0, NULL, NULL, NULL),
+(9003, 2, 0, NULL, NULL, NULL),
+(9004, 3, 0, NULL, NULL, NULL),
+(9005, 3, 0, NULL, NULL, NULL),
+(9006, 1, 0, NULL, NULL, NULL),
+(9007, 1, 0, NULL, NULL, NULL),
+(9008, 1, 0, NULL, NULL, NULL),
+(9009, 2, 0, NULL, NULL, NULL),
+(9010, 2, 0, NULL, NULL, NULL);
+
+--
+-- Chỉ mục cho các bảng đã đổ
+--
+
+--
+-- Chỉ mục cho bảng `room`
+--
+ALTER TABLE `room`
+  ADD PRIMARY KEY (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

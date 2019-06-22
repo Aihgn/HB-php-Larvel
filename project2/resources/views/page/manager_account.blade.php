@@ -3,57 +3,60 @@
 	
 	<div class="col-12 col-md-8 mt-4 mb-4 p-2 card">		
 		<button class="add-new btn-admin col-5 p-2">+ Add new manager</button>
-		<div class="content-add-new">
+		<div class="content-collapse">
 			<div class="input-field mt-3 mb-5"> 
                 <label for="search">{{ __('Search') }}</label>
                 <input id="search" type="text" placeholder="Enter name or email" required autofocus>
             </div>
 
             <table class="table table-dark table-hover">
-	    	<thead>
-	    		<tr>
-	    			<th>No.</th>	
-	    			<th>Name</th>    			
-	    			<th>Email</th>
-	    			<th></th> 
-	    		</tr>
-	    	</thead>
-	    	<tbody id="tb-search">    			    		
-	    	</tbody>
-	    </table>
+		    	<thead>
+		    		<tr>
+		    			<th>No.</th>	
+		    			<th>Name</th>    			
+		    			<th>Email</th>
+		    			<th></th> 
+		    		</tr>
+		    	</thead>
+		    	<tbody id="tb-search">    			    		
+		    	</tbody>
+		    </table>
 	    </div>
 	</div>
 
 	<div class="card pt-3">
 		<h4 class="m-3">Team manager</h4>
-		<table class="table table-dark table-hover">
-	    	<thead>
-	    		<tr>
-	    			<th>No.</th>	
-	    			<th>Name</th>    			
-	    			<th>Email</th>
-	    			<th>Role</th>    			
-	    			<th>Remove</th>
-	    			<th>Delete</th>
-	    		</tr>
-	    	</thead>
-	    	<tbody id='account-manager'>    		
-	    		@foreach($acc as $i=>$r)    
-	    		<tr>
-	    			<td>{{$i+1}}</td>
-	    			<td>{{$r->name}}</td>
-	    			<td>{{$r->email}}</td>   
-	    			@if($r->role_id == 2) 			
-	    				<td>{{$r->description}}</td>
-	    				<td><a href="#" id='{{$r->user_id}}' class="remove-role btn btn-danger pb-2 pt-2 pl-1 pr-1">Remove</a></td>    	
-	    				<td><a href="#" id='{{$r->user_id}}' class="delete-acc btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</a></td> 			
-	    			@else
-	    				<td>{{$r->description}}</td>
-	    			@endif	
-	    		</tr>    		
-	    		@endforeach
-	    	</tbody>
-	    </table>
+		<span id="mess_output"></span>
+		<div class="table-responsive">
+			<table class="table table-dark table-hover">
+		    	<thead>
+		    		<tr>
+		    			<th>No.</th>	
+		    			<th>Name</th>    			
+		    			<th>Email</th>
+		    			<th>Role</th>    			
+		    			<th>Remove</th>
+		    			<th>Delete</th>
+		    		</tr>
+		    	</thead>
+		    	<tbody id='account-manager'>    		
+		    		@foreach($acc as $i=>$r)    
+		    		<tr>
+		    			<td>{{$i+1}}</td>
+		    			<td>{{$r->name}}</td>
+		    			<td>{{$r->email}}</td>   
+		    			@if($r->role_id == 2) 			
+		    				<td>{{$r->description}}</td>
+		    				<td><a href="#" id='{{$r->user_id}}' class="remove-role btn btn-danger pb-2 pt-2 pl-1 pr-1">Remove</a></td>    	
+		    				<td><a href="#" id='{{$r->user_id}}' class="delete-acc btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</a></td> 			
+		    			@else
+		    				<td>{{$r->description}}</td>
+		    			@endif	
+		    		</tr>    		
+		    		@endforeach
+		    	</tbody>
+		    </table>
+	    </div>
     </div>
 
     <script type="text/javascript">
@@ -71,7 +74,7 @@
 						console.log(data);
 						$('#tb-search').html(data.table_data);						
 					}
-				})
+				});
 			}
 
 			function getAccount()
@@ -107,10 +110,11 @@
 			$(document).on('keyup', '#search', function(){
 				var query = $(this).val();
 				fetch_user_data(query);
-			});		
+			});
 
 			$(document).on('click', '.add-role', function(){
 				var id = this.id;
+				$('#mess_output').html('');
 				if(confirm("Are you sure you want to add this records to manager team?"))
 				{
 					$.ajax({
@@ -120,6 +124,7 @@
 						dataType: 'json',
 						success:function(data)
 						{	
+							$('#mess_output').html(data);
 						}
 					});
 					getAccount();
@@ -129,6 +134,7 @@
 
 			$(document).on('click', '.remove-role', function(){
 				var id = this.id;
+				$('#mess_output').html('');
 				if(confirm("Are you sure you want to remove role of this records?"))
 				{
 					$.ajax({
@@ -138,6 +144,7 @@
 						dataType: 'json',
 						success:function(data)
 						{	
+							$('#mess_output').html(data);
 						}
 					});
 					getAccount();
@@ -147,6 +154,7 @@
 
 			$(document).on('click', '.delete-acc', function(){
 				var id = this.id;
+				$('#mess_output').html('');
 				if(confirm("Are you sure you want to delete this records?"))
   				{
 					$.ajax({
@@ -156,6 +164,7 @@
 						dataType: 'json',
 						success:function(data)
 						{	
+							$('#mess_output').html(data);
 						}
 					});
 					getAccount();

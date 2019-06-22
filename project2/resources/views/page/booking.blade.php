@@ -290,20 +290,17 @@
 						<div class="col-10 col-lg-6 pl-5 pr-5 mb-5 mt-5">
 							<h5 class="text-center color-white">Your reservation</h5>
 							<div class="detail mt-2 mb-3">
+
 							</div>
-							<div class="total-amount" >
-								<table >
-									<td class="text-left">
-										<span>Total reservation amount: $</span>
-									</td>
-									<td class="text-right">
-										{{-- <span id="total_amount"></span> --}}
-										<div class="input-field">
-								            <input id="total_amount" type="text" class="color-white" name="total_amount" value="" required readonly="">
-								        </div>
-									</td>
-								</table>
+							<div class="total-amount row" >
+								<div class="col-6 p-2">Total reservation amount: $</div>
+								<div class="col-6">
+									<div class="input-field m-0">
+							            <input id="total_amount" type="text" class="color-white" name="total_amount" value="" required readonly="" style="border: none">
+							        </div>
+							    </div>		
 							</div>
+							<input type="hidden" name="qty_r" id="qty-r" value="" />
 						</div>
 						<div class="customer_info col-10 col-lg-6 pl-5 pr-5 mb-5 mt-5">
 							<h5 class="text-center color-white">Your infomation</h5>
@@ -439,12 +436,12 @@
 
 
 		//add room
-		var j=0;
+		var j=0;		
 		var max_rooms=10;
 		var total_amount=0;
 		$('.reserve-room').click(function()
 		{	
-
+			
 			document.getElementById('lds-ring').style.display="block";
 			setTimeout(function unwait() 
 			{
@@ -466,18 +463,18 @@
 						$('.room-cart').append(data.room);
 						$('.detail').append(data.detail);
 						total_amount+=data.room_price;
-						$('#total_amount').val(total_amount);
+						$('#total_amount').val(total_amount);	
+						$('#qty-r').val(j);					
 					}
 				});		
 				if(j===max_rooms){
 					$('.nav-tabs a[href="#total"]').tab('show');
 				}
-				j++;			
+				j++;							
 				$("#room-pick-header").html("Accomodations <br>"+(j)+" rooms");	
 			}else{
 				$('.nav-tabs a[href="#total"]').tab('show');
-			}		
-			console.log(j);
+			}
 		});
 
 

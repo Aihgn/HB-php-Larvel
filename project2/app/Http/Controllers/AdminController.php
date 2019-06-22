@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Room;
 use App\Role;
+use App\Customer;
+use App\Reservation;
 
 class AdminController extends Controller
 {
@@ -27,14 +29,6 @@ class AdminController extends Controller
         return view('page.index_admin');
     }
 
-    public function getCheckin1($id)
-    {
-        Reservation::where('id_customer',$id)->update(array(
-                        'status'=>'1',
-            ));
-        return redirect()->back();
-    }
-
     public function getManagerAcc(Request $req)
     {
         $req->user()->authorizeRoles('admin');
@@ -52,19 +46,34 @@ class AdminController extends Controller
     {
         $req->user()->authorizeRoles(['receptionist', 'admin']);
         $date = date('Y-m-d', strtotime(Carbon::now()));
-        $res = DB::table('reservation')
-        ->join('customer','customer.id','reservation.id_customer')
+        $res = DB::table('customer')
+        ->join('reservation','customer.id','reservation.id_customer')
         ->where('reservation.date_in', '=',$date)
         ->get();
         return view('page.check_in',compact('res'));
     }
 
-
-    public function getManagerRoom()
+    public function getCheckout(Request $req)
     {
+        // $temp = DB::table('reservation')
+        //         // ->join('reservation_detail', 'reservation_detail.id_reservation', 'reservation.id')
+        //         // ->join('room','room.id','reservation_detail.id_room')
+        //         ->where('reservation.id','=', 3)
+        //         ->get();
+        //         dd($temp);
+        return view('page.check_out');
+    }
 
-        $room = Room::all();
-        return view('page.manager_room',compact('room'));
+    public function getAllRes(Request $req)
+    {
+        return view('page.all_reservation');
+    }
+
+    public function getManagerRoom(Request $req)
+    {
+        $req->user()->authorizeRoles(['admin']);        
+        $room_type = DB::table('type_room')->get();
+        return view('page.manager_room',compact('room_type'));
     }
     
 
@@ -76,19 +85,47 @@ class AdminController extends Controller
 
     public function postBookOff(Request $req)
     {
-        $reservation = new Reservation();        
+        $qty= $req->qty_room;
+        $startDate = substr($req->datefilter, 0, -13);
+        $endDate = substr($req->datefilter,13);
         
         $customer = new Customer();
         $customer->name = $req->name;
         $customer->email = $req->email;
         $customer->phone_number = $req->phone_number;
         $customer->save();
-        $reservation->id_customer = $customer->id;
-        
+
+        $reservation = new Reservation(); 
+        $reservation->id_customer = $customer->id;        
         $reservation->total=$req->total;            
-        $reservation->date_in = date('Y-m-d', strtotime($req->start));
-        $reservation->date_out = date('Y-m-d', strtotime($req->end));
+        $reservation->date_in = date('Y-m-d', strtotime($startDate));
+        $reservation->date_out = date('Y-m-d', strtotime($endDate));
         $reservation->save();
-        return redirect()->back();
+
+        for($i = 0; $i < $qty; $i++)
+        {
+            $temp_str ='';
+            $temp_str .='sel_'.$i.'';
+            $this->genRoom($req->$temp_str,$startDate,$reservation->id);
+        }
+
+        return redirect()->back()->with('success', 'Book room success!');  
     }
+
+    public function genRoom($id_type,$exp_date,$id_res){
+        $room = DB::table('room')
+                ->where('id_type', '=', $id_type)
+                ->where('status','=',0)
+                ->first();
+        $exp = date('Y-m-d',strtotime(' + 1 day', strtotime($exp_date)));
+        DB::table('room')
+            ->where('id', $room->id)
+            ->update(['status' => 2,
+                    'expiry_date' => $exp]);
+        DB::table('reservation_detail')
+            ->insertGetId(['id_reservation' => $id_res,
+                         'id_room' => $room->id],            
+        );
+        return $room->id;
+    } 
 }

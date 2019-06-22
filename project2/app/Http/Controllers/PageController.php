@@ -13,7 +13,7 @@ use App\Customer;
 use App\RoomType;
 use App\Reservation;
 use App\User;
-
+include ("AdminController.php");
 
 class PageController extends Controller
 {    
@@ -143,6 +143,9 @@ class PageController extends Controller
 
     public function postBooking(Request $req)
     {
+        $qty = $req->qty_r;
+        $AdminController = new AdminController();
+        
         $reservation = new Reservation();        
         if (Auth::check()){
             $reservation->id_customer= Auth::user()->id;
@@ -158,6 +161,13 @@ class PageController extends Controller
         $reservation->date_in = date('Y-m-d', strtotime($req->start));
         $reservation->date_out = date('Y-m-d', strtotime($req->end));
         $reservation->save();
+        for($i = 1; $i <= $qty; $i++)
+        {
+            $temp_str ='';
+            $temp_str .='type_room_'.$i.'';
+            // dd($req->$temp_str);
+            $AdminController->genRoom($req->$temp_str, date('Y-m-d', strtotime($req->start)),$reservation->id);
+        }
         return redirect('/');
     }
     

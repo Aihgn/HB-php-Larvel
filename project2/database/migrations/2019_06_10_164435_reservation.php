@@ -19,7 +19,7 @@ class Reservation extends Migration
             $table->integer('total')->unsigned();
             $table->date('date_in');
             $table->date('date_out');
-            $table->string('status')->default(0)->comment('0:Pending, 1:Done, 2:Cancel');        
+            $table->string('status')->default(0)->comment('0:Pending, 1:Check-out, 2:Done, 3:Cancel');        
             $table->timestamps();
         });
     }
