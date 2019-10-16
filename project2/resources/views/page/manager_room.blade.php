@@ -148,7 +148,8 @@
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$(".room-type").click(function () {
+			$(".room-type").click(function (e) {
+				e.preventDefault()
 			    $header = $(this);
 			    //getting the next element
 			    $content = $header.next();

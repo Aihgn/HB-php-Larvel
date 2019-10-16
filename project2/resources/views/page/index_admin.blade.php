@@ -30,7 +30,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function(){
 			getProfitToday();
 			getProfit7days();
@@ -89,6 +89,6 @@
 
 		});
     
-	</script>
+	</script> -->
 
 @endsection

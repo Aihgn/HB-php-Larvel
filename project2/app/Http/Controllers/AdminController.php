@@ -124,8 +124,7 @@ class AdminController extends Controller
                     'expiry_date' => $exp]);
         DB::table('reservation_detail')
             ->insertGetId(['id_reservation' => $id_res,
-                         'id_room' => $room->id],            
-        );
+                         'id_room' => $room->id]);
         return $room->id;
     } 
 }
