@@ -26,7 +26,7 @@ class AdminController extends Controller
     public function getAdmin(Request $req)
     {
         $req->user()->authorizeRoles(['receptionist', 'admin']);        
-        return view('page.index_admin');
+        return view('page.admin.index_admin');
     }
 
     public function getManagerAcc(Request $req)
@@ -39,7 +39,7 @@ class AdminController extends Controller
         ->orWhere('role_user.role_id', '=',2)
         ->orderBy('role_user.role_id', 'desc')
         ->get();   
-        return view('page.manager_account',compact('acc'));
+        return view('page.admin.manager_account',compact('acc'));
     }
 
     public function getCheckin(Request $req)
@@ -50,7 +50,7 @@ class AdminController extends Controller
         ->join('reservation','customer.id','reservation.id_customer')
         ->where('reservation.date_in', '=',$date)
         ->get();
-        return view('page.check_in',compact('res'));
+        return view('page.admin.check_in',compact('res'));
     }
 
     public function getCheckout(Request $req)
@@ -61,26 +61,26 @@ class AdminController extends Controller
         //         ->where('reservation.id','=', 3)
         //         ->get();
         //         dd($temp);
-        return view('page.check_out');
+        return view('page.admin.check_out');
     }
 
     public function getAllRes(Request $req)
     {
-        return view('page.all_reservation');
+        return view('page.admin.reservation');
     }
 
     public function getManagerRoom(Request $req)
     {
         $req->user()->authorizeRoles(['admin']);        
         $room_type = DB::table('type_room')->get();
-        return view('page.manager_room',compact('room_type'));
+        return view('page.admin.manager_room',compact('room_type'));
     }
     
 
     public function getBookOff()
     {
         $room =Room::all();
-        return view('page.book_off',compact('room'));
+        return view('page.admin.booking',compact('room'));
     }
 
     public function postBookOff(Request $req)

@@ -11,7 +11,7 @@
 			
 		 {{-- --}}
 			<div id="date-pick mt-4" class="tab-pane">
-				<h5 class="color-white mt-2 mb-3 ml-4">Pick Date</h5>
+				<h5 class="mt-2 mb-3 ml-4">Pick Date</h5>
 				<div class="row ml-5">
 					<div class="col-3 mt-1">
 						<div class="row mb-4 input-field">
@@ -21,9 +21,9 @@
 				</div>		
 			</div>
 		 {{-- --}}
-			<h5 class="color-white mt-2 mb-1 ml-4">Select Room</h5>
+			<h5 class="mt-2 mb-1 ml-4">Select Room</h5>
 			<input type="hidden" name="qty_room" id="qty_room" value="" />
-			<div class="container mb-4">
+			<div class="container mb-4 ml-0">
 	            <div class="sel-type mt-3">
 	            	<div class="m-2">
 						<select class="ml-4 col-4 sel-room-type" name="sel_0" id="sel_0">
@@ -37,14 +37,14 @@
 				<button class="btn btn-danger ml-4 mt-3" type="button" id="add_room">Add room</button>
 			</div>
 			<div class="mb-1 ml-4 mt-4">
-				<h5 class="color-white">Guest infomation</h5>
+				<h5 class="">Guest infomation</h5>
 				<div class="input-field"> 
 	                <label for="name">{{ __('Full name:')}}</label>
-	                <input id="name" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} color-white" value="" required>	                
+	                <input id="name" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} " value="" required>	                
 	            </div>
 	            <div class="input-field">
 	                <label for="email">{{__('Email:')}}</label>
-	                <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} color-white" name="email" value="" required>
+	                <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} " name="email" value="" required>
 
 	                @if ($errors->has('email'))
 	                    <div class="alert-error text-center mt-4">
@@ -54,12 +54,12 @@
 	            </div>
 	            <div class="input-field">
 		        	<label for="phone_number">{{ __('Phone number:')}}</label>
-		            <input id="phone_number" type="text" class="color-white" name="phone_number" value="" required>   
+		            <input id="phone_number" type="text" class="" name="phone_number" value="" required>   
 		        </div>
 			</div>
 			<div class="ml-4 mt-4 input-field">
-	        	<h5 class="color-white">Total</h5>
-	            <input id="total" type="text" class="color-white" name="total" value="300" required readonly="">   
+	        	<h5 class="">Total</h5>
+	            <input id="total" type="text" class="" name="total" value="300" required readonly="">   
 	        </div>
 			<div class="button-div text-center mt-4 col-12 col-md-4">
 		        <button type="submit" class="book btn-admin p-2 mb-4">
