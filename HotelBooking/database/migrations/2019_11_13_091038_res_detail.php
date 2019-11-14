@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TypeRoom extends Migration
+class ResDetail extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class TypeRoom extends Migration
      */
     public function up()
     {
-        Schema::create('type_room', function (Blueprint $table) {
+        Schema::create('res_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('image')->default(NULL)->nullable();
-            $table->integer('price');   
-            $table->string('description');                
+            $table->integer('room_type_id');
+            $table->integer('quantity');   
+            $table->datetime('checkin_date');
+            $table->datetime('checkout_date');             
             $table->timestamps();
         });
     }

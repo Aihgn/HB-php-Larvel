@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Reservation extends Migration
+class Group extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class Reservation extends Migration
      */
     public function up()
     {
-        Schema::create('reservation', function (Blueprint $table) {
+        Schema::create('group', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_customer')->unsigned();
-            $table->integer('total')->unsigned();
-            $table->date('date_in');
-            $table->date('date_out');
-            $table->string('status')->default(0)->comment('0:Pending, 1:Check-out, 2:Done, 3:Cancel');        
+            $table->string('name');            
             $table->timestamps();
         });
     }

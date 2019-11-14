@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class roomtype extends Model
 {
-    protected $table = "type_room";
+    protected $table = "roomtype";
 
     protected $fillable = [
         'name', 'price','description'
     ];
 
-    public function room(){
-    	return $this->hasMany('App\Room', 'id_type', 'id');
-    }
+    // public function res_detail(){
+    // 	return $this->belongsto('App\resDetail', 'id_type', 'id');
+    // }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Customer extends Migration
+class Reservation extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class Customer extends Migration
      */
     public function up()
     {
-        Schema::create('customer', function (Blueprint $table) {
+        Schema::create('reservation', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_user')->unsigned()->default(NULL)->nullable();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone_number')->default(NULL)->nullable();
-            $table->string('address')->default(NULL)->nullable();
-            $table->string('note')->default(NULL)->nullable();
+            $table->integer('user_id');
+            $table->string('address');   
+            $table->string('phone_number');
+            $table->string('email');      
+            $table->integer('status');
             $table->timestamps();
         });
     }
