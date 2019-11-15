@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Room;
-use App\Role;
-use App\Customer;
+use App\User;
 use App\Reservation;
 
 class AdminController extends Controller

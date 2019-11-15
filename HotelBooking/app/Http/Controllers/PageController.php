@@ -9,7 +9,6 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Auth;
-use App\Customer;
 use App\RoomType;
 use App\Reservation;
 use App\User;

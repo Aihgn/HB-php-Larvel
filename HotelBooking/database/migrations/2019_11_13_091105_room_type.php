@@ -13,7 +13,7 @@ class RoomType extends Migration
      */
     public function up()
     {
-        Schema::create('RoomType', function (Blueprint $table) {
+        Schema::create('room_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->float('price');              
@@ -28,6 +28,6 @@ class RoomType extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('room_types');
     }
 }

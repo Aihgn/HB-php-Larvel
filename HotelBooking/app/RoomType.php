@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class roomtype extends Model
 {
-    protected $table = "roomtype";
+    protected $table = "room_types";
 
     protected $fillable = [
         'name', 'price','description'
     ];
 
-    // public function res_detail(){
-    // 	return $this->belongsto('App\resDetail', 'id_type', 'id');
-    // }
+    public function res_detail(){
+    	return $this->belongsto(ResDetail::class);
+    }
 }

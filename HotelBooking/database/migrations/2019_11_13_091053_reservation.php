@@ -13,7 +13,7 @@ class Reservation extends Migration
      */
     public function up()
     {
-        Schema::create('reservation', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->string('address');   
@@ -31,6 +31,6 @@ class Reservation extends Migration
      */
     public function down()
     {
-        //
+        schema::dropIfExists('reservations');
     }
 }

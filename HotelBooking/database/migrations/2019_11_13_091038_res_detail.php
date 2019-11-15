@@ -13,7 +13,7 @@ class ResDetail extends Migration
      */
     public function up()
     {
-        Schema::create('res_detail', function (Blueprint $table) {
+        Schema::create('res_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('room_type_id');
             $table->integer('quantity');   
@@ -30,6 +30,6 @@ class ResDetail extends Migration
      */
     public function down()
     {
-        //
+         schema::dropIfExists('res_details');
     }
 }

@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\RoomType;
-use App\Room;
 use Validator;
 use Carbon;
+use App\RoomType;
 
 class AjaxController extends Controller
 {
