@@ -13,7 +13,7 @@ class Group extends Migration
      */
     public function up()
     {
-        Schema::create('group', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');            
             $table->timestamps();
@@ -27,6 +27,6 @@ class Group extends Migration
      */
     public function down()
     {
-        //
+         schema::dropIfExists('groups');
     }
 }
