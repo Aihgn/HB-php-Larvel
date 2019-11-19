@@ -9,7 +9,7 @@ class roomtype extends Model
     protected $table = "room_types";
 
     protected $fillable = [
-        'name', 'price','description'
+        'name', 'price','description', 'quantity', 'available'
     ];
 
     public function res_detail(){

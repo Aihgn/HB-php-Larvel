@@ -2,70 +2,71 @@
 @section('content')
 	<div class="card mt-4">		
 		@if (Session::has('success'))
-		    <span class="alert alert-success">
-		        {!! \Session::get('success') !!}
-		    </span>
+			<span class="alert alert-success">
+				{!! \Session::get('success') !!}
+			</span>
 		@endif
 		<form method="POST" id="post-book" action="{{ route('book_off') }}">
 		@csrf
 			
-		 {{-- --}}
+		
 			<div id="date-pick mt-4" class="tab-pane">
-				<h5 class="mt-2 mb-3 ml-4">Pick Date</h5>
-				<div class="row ml-5">
-					<div class="col-3 mt-1">
-						<div class="row mb-4 input-field">
-						<input type="text" id="date" name="datefilter" value="" placeholder="" />
-						</div>							
-					</div>
-				</div>		
+				<h4 class="mt-2 mb-3 ml-4">Pick Date</h4>
+				<div class="m-4 input-field col-4">
+					<input type="text" id="date" name="datefilter" value="" placeholder=""/>
+				</div>	
 			</div>
-		 {{-- --}}
-			<h5 class="mt-2 mb-1 ml-4">Select Room</h5>
+
+			
+		
+			<h4 class="mt-2 mb-1 ml-4">Select Room</h4>
 			<input type="hidden" name="qty_room" id="qty_room" value="" />
 			<div class="container mb-4 ml-0">
-	            <div class="sel-type mt-3">
-	            	<div class="m-2">
+				<div class="sel-type mt-3">
+					<div class="m-2">
 						<select class="ml-4 col-4 sel-room-type" name="sel_0" id="sel_0">
-							<option value="1">Family room</option>
-							<option value="2">Luxury room</option>
-							<option value="3">Couple room</option>
-							<option value="4">Standard room</option>
-						</select>						
+							@foreach($room_type as $rt)
+								<option value="{{$rt->id}}">{{$rt->name}}</option>
+							@endforeach	
+						</select>	
 					</div>
 				</div>
 				<button class="btn btn-danger ml-4 mt-3" type="button" id="add_room">Add room</button>
 			</div>
-			<div class="mb-1 ml-4 mt-4">
-				<h5 class="">Guest infomation</h5>
-				<div class="input-field"> 
-	                <label for="name">{{ __('Full name:')}}</label>
-	                <input id="name" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} " value="" required>	                
-	            </div>
-	            <div class="input-field">
-	                <label for="email">{{__('Email:')}}</label>
-	                <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} " name="email" value="" required>
 
-	                @if ($errors->has('email'))
-	                    <div class="alert-error text-center mt-4">
-	                        <strong>*{{ $errors->first('email') }}</strong>
-	                    </div>
-	                @endif
-	            </div>
-	            <div class="input-field">
-		        	<label for="phone_number">{{ __('Phone number:')}}</label>
-		            <input id="phone_number" type="text" class="" name="phone_number" value="" required>   
-		        </div>
+
+			{{-- - --}}
+			<div class="mb-1 ml-4 mt-4">
+				<h4 class="">Guest infomation</h4>
+				<div class="input-field m-4"> 
+					<label for="name">Full name:</label>
+					<input id="name" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} " value="" required>	                
+				</div>
+				<div class="input-field m-4">
+					<label for="email">Email:</label>
+					<input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} " name="email" value="" required>
+
+					@if ($errors->has('email'))
+						<div class="alert-error text-center mt-4">
+							<strong>*{{ $errors->first('email') }}</strong>
+						</div>
+					@endif
+				</div>
+				<div class="input-field m-4">
+					<label for="phone_number">Phone number:</label>
+					<input id="phone_number" type="text" class="" name="phone_number" value="" required>   
+				</div>
 			</div>
-			<div class="ml-4 mt-4 input-field">
-	        	<h5 class="">Total</h5>
-	            <input id="total" type="text" class="" name="total" value="300" required readonly="">   
-	        </div>
+
+
+			{{--  --}}
+			<div class="input-field m-4">
+				<h5 class="">Total</h5>
+				<input id="total" type="text" class="" name="total" value="" required readonly="">   
+			</div>
 			<div class="button-div text-center mt-4 col-12 col-md-4">
-		        <button type="submit" class="book btn-admin p-2 mb-4">
-		            {{ __('Book now') }}
-		        </button>                                
-		    </div>
+				<button type="submit" class="book btn-admin p-2 mb-4">Book now</button>                                
+			</div>
 		</form>
 	</div>
 	<script type="text/javascript">
@@ -74,9 +75,8 @@
 			var i_room = 0;
 			$(document).on("click","#add_room",function(){
 				i_room++;
-				var id_r ='sel_'+i_room;
-				// alert(id_div);
-				var data = '<div class="m-2"><select class="ml-4 col-4 sel-room-type" name="'+id_r+'" id="'+id_r+'"><option value="1">Family room</option><option value="2">Luxury room</option><option value="3">Couple room</option><option value="4">Standard room</option></select><button class="btn btn-danger rm_room ml-4" type="button">Remove</button></div>';
+				var id_r ='sel_'+i_room;				
+				var data = '<div class="m-2"><select class="ml-4 col-4 sel-room-type" name="'+id_r+'" id="'+id_r+'"><option value="1">Grand king</option><option value="2">Luxury</option><option value="3">Deluxe</option><option value="4">Superior</option></select><button class="btn btn-danger rm_room ml-4" type="button">Remove</button></div>';
 				$(".sel-type").append(data);
 				calTotal();
 			});
@@ -102,10 +102,10 @@
 			}
 
 			function getFormattedDate(date) {			    
-			    var day = date.getDate();
-  				var month = date.getMonth()+1;
-  				var year = date.getFullYear();
-			    return day + "/" + month + "/" + year;
+				var day = date.getDate();
+				var month = date.getMonth()+1;
+				var year = date.getFullYear();
+				return day + "/" + month + "/" + year;
 			}
 
 			$("#qty_room").val(i_room+1);
@@ -168,7 +168,7 @@
 
 			$(function() {
 				var dateToday = new Date();
-			  	$('input[name="datefilter"]').daterangepicker({
+				$('input[name="datefilter"]').daterangepicker({
 					autoUpdateInput: true,				
 					minDate: dateToday,
 					locale: {
@@ -177,13 +177,13 @@
 					}
 				  });
 
-			  	$('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-			    	$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-			 	 });
+				$('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+					$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+				 });
 
-			  	$('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-			      $(this).val('');
-			  	});
+				$('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+				  $(this).val('');
+				});
 			});
 		});
 

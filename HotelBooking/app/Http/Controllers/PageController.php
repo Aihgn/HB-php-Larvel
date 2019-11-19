@@ -39,8 +39,8 @@ class PageController extends Controller
     public function getMyAccount()
     {       
         $id = Auth::user()->id;
-        $acc_info = Customer::where('id_user',$id)->get();   
-        $booking_info = Reservation::where('id_customer',$id)->get();
+        $acc_info = User::where('id',$id)->get();   
+        $booking_info = Reservation::where('user_id',$id)->get();
         return view('page.my_account', compact('acc_info','booking_info'));        
     }
 
@@ -132,7 +132,7 @@ class PageController extends Controller
         if (Auth::check())
         {
             $id = Auth::user()->id;
-            $acc_info = Customer::where('id_user',$id)->get();            
+            $acc_info = User::where('id',$id)->get();            
             return view('page.booking', compact('room','acc_info'));
         } else{
             return view('page.booking', compact('room'));

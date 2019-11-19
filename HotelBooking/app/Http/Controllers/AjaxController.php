@@ -71,105 +71,6 @@ class AjaxController extends Controller
 
     //admin---------------------------------------------
 
-    public function getProfitToday(Request $req){
-        if($req->ajax())
-        {
-            $total = 0;$mytime = Carbon\Carbon::now();
-            $date = date('Y-m-d', strtotime($mytime));
-
-            $profit = DB::table('reservation')
-                ->where('status', '=', 2) 
-                ->where('date_out', '=', $date)
-                ->get();
-            foreach ($profit as $key => $value) {
-                $total += $value->total;
-            }
-            echo json_encode($total);      
-        }
-    }
-
-    public function getProfit7days(Request $req){
-        if($req->ajax())
-        {
-            $total = 0;
-            $today = Carbon\Carbon::now();
-            
-            $date = date('Y-m-d', strtotime($today));
-            $lastW = date('Y-m-d',strtotime(' - 7 day', strtotime($today)));
-
-            $profit = DB::table('reservation')
-                ->where('status', '=', 2) 
-                ->whereBetween('date_out', [$lastW, $date])
-                ->get();
-            foreach ($profit as $key => $value) {
-                $total += $value->total;
-            }
-            echo json_encode($total);      
-        }
-    }
-
-    public function getBookRate(Request $req){
-        if($req->ajax())
-        {            
-            $today = Carbon\Carbon::now();
-            
-            $date = date('Y-m-d', strtotime($today));
-            $lastW = date('Y-m-d',strtotime(' - 7 day', strtotime($today)));
-
-            $count = DB::table('reservation')
-                ->where('status', '!=', 3) 
-                ->whereBetween('date_out', [$lastW, $date])
-                ->get();
-            $count1=DB::table('reservation')
-                ->join('reservation_detail', 'reservation.id', 'reservation_detail.id_reservation')
-                ->join('room','reservation_detail.id_room','room.id')
-                // ->where('room.id_type', '=', 1)
-                ->where('reservation.status', '!=', 3) 
-                ->whereBetween('date_out', [$lastW, $date])
-                ->count();
-
-            $count2=DB::table('reservation')
-                ->join('reservation_detail', 'reservation.id', 'reservation_detail.id_reservation')
-                ->join('room','reservation_detail.id_room','room.id')
-                ->where('room.id_type', '=', 2)
-                ->where('reservation.status', '!=', 3) 
-                ->whereBetween('date_out', [$lastW, $date])
-                ->count();
-
-            $count3=DB::table('reservation')
-                ->join('reservation_detail', 'reservation.id', 'reservation_detail.id_reservation')
-                ->join('room','reservation_detail.id_room','room.id')
-                ->where('room.id_type', '=', 3)
-                ->where('reservation.status', '!=', 3) 
-                ->whereBetween('date_out', [$lastW, $date])
-                ->count();
-            $count4=DB::table('reservation')
-                ->join('reservation_detail', 'reservation.id', 'reservation_detail.id_reservation')
-                ->join('room','reservation_detail.id_room','room.id')
-                ->where('room.id_type', '=', 4)
-                ->where('reservation.status', '!=', 3) 
-                ->whereBetween('date_out', [$lastW, $date])
-                ->count();
-            $rate1 =  round($count1/$count*100, 2);
-            $rate2 =  round($count2/$count*100, 2);
-            $rate3 =  round($count3/$count*100, 2);
-            $rate4 =  round($count4/$count*100, 2);
-            $output='';
-            $output .= '
-                <div>Family room: '.$rate1.' %</div>
-                <div>Luxury room: '.$rate2.' %</div>
-                <div>Couple room: '.$rate3.' %</div>
-                <div>Standard room: '.$rate4.' %</div>
-            ';
-            // dd($rate1,$count2,$count3,$count4);
-            echo json_encode($output);      
-        }
-    }
-
-    // public function getProfitMonth()
-    // {
-
-    // }
 
 
     //book off
@@ -443,135 +344,30 @@ class AjaxController extends Controller
             echo json_encode($output);            
         }
     }
-
+// Manager Room
     public function getRoomType(Request $req)
     {
         if($req->ajax())
         {
             $output='';
-            $room = DB::table('type_room')                       
-                ->get();
-            foreach($room as $i=>$row)
+            $room_types = DB::table('room_types')->get();
+            foreach($room_types as $i=>$rt)
             {                
                 $output .= '
                     <tr>
                         <td>'.($i+1).'</td>
-                        <td>'.$row->name.'</td>
-                        <td>'.$row->price.'</td>     
-                        <td>'.$row->description.'</td>                
-                        <td><button id="'.$row->id.'"  type="button" data-toggle="modal" class="edit-type-btn btn btn btn-success pb-2 pt-2 pl-1 pr-1">Edit</button></td>
-                        <td><button id="'.$row->id.'"  type="button" data-toggle="modal" class="del-type-btn btn btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</button></td>
+                        <td>'.$rt->name.'</td>
+                        <td>'.$rt->price.'</td>
+                        <td>'.$rt->quantity.'</td>
+                        <td>'.$rt->available.'</td>     
+                        <td>'.$rt->description.'</td>                
+                        <td><button id="'.$rt->id.'"  type="button" data-toggle="modal" class="edit-type-btn btn btn btn-success pb-2 pt-2 pl-1 pr-1">Edit</button></td>
+                        <td><button id="'.$rt->id.'"  type="button" data-toggle="modal" class="del-type-btn btn btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</button></td>
                     </tr>
                     ';                
             }
             $data = array(
                 'table_data'  => $output,              
-            );
-            echo json_encode($data);
-        }
-    }
-
-    public function getRoom(Request $req)
-    {
-        if($req->ajax())
-        {
-            $output='';
-            $room = DB::table('type_room')
-                ->join('room','room.id_type','=','type_room.id')
-                ->orderBy('room.id', 'asc')         
-                ->get();
-            foreach($room as $i=>$row)
-            {                
-                $output .= '
-                    <tr>
-                        <td>'.($i+1).'</td>
-                        <td>'.$row->id.'</td>
-                        <td>'.$row->name.'</td>
-                    ';
-                if($row->status == 0)
-                {
-                    $output .= '<td>Empty</td>';
-                }
-                elseif($row->status == 1)
-                {
-                    $output .= '<td>Used</td>';
-                }
-                else
-                {
-                     $output .= '<td>Booked</td>';
-                }
-                $output .= '                   
-                        <td><a href="#" id="'.$row->id.' "class="edit-room-btn btn btn btn-success">Edit</a></td>
-                    </tr>
-                    ';                
-            }
-            $data = array(
-                'table_data'  => $output,              
-            );
-            echo json_encode($data);
-        }
-    }
-
-    public function liveSearchRoom(Request $req)
-    {
-        if($req->ajax())
-        {   
-            $output = '';
-            $query = $req->get('query');
-            if($query != '')
-            {
-                $room = DB::table('type_room')
-                    ->join('room','room.id_type','=','type_room.id')
-                    ->where('room.id', 'like', ''.$query.'%')
-                    ->orderBy('room.id', 'asc')         
-                    ->get();
-            }
-            else
-            {
-                $room = DB::table('type_room')
-                    ->join('room','room.id_type','=','type_room.id')               
-                    ->orderBy('room.id', 'asc')         
-                    ->get();
-            }
-            $total_row = $room->count();
-            if($total_row > 0)
-            {
-                foreach($room as $i=>$row)
-                {                
-                    $output .= '
-                        <tr>
-                            <td>'.($i+1).'</td>
-                            <td>'.$row->id.'</td>
-                            <td>'.$row->name.'</td>
-                        ';
-                    if($row->status == 0)
-                    {
-                        $output .= '<td>Empty</td>';
-                    }
-                    elseif($row->status == 1)
-                    {
-                        $output .= '<td>Used</td>';
-                    }
-                    else
-                    {
-                         $output .= '<td>Booked</td>';
-                    }
-                    $output .= '                   
-                            <td><a href="#" id="'.$row->id.' "class="edit-btn btn btn btn-success">Edit</a></td>
-                        </tr>
-                        ';                
-                }
-            }
-            else
-            {
-                $output = '
-                   <tr>
-                        <td align="center" colspan="5">No Data Found</td>
-                   </tr>
-                   ';
-            }
-            $data = array(
-                'table_data'  => $output,                
             );
             echo json_encode($data);
         }
@@ -586,24 +382,9 @@ class AjaxController extends Controller
             $data = array(
                 'type'    =>  $room_type->name,
                 'price'     =>  $room_type->price,
+                'quantity' => $room_type->quantity,
+                'available' => $room_type->available,
                 'description' => $room_type->description
-            );
-            echo json_encode($data);
-        }
-    }
-
-    public function fetchdataRoom(Request $req)
-    {
-        if($req->ajax())
-        {
-            $id = $req->get('id');            
-            $room = DB::table('type_room')
-                ->join('room','room.id_type','=','type_room.id')
-                ->where('room.id','=',$id)      
-                ->get();               
-            $data = array(
-                'type' => $room[0]->id_type,
-                'status' => $room[0]->status,
             );
             echo json_encode($data);
         }
@@ -616,12 +397,16 @@ class AjaxController extends Controller
             $id = $req->get('room_type_id');
             $type = $req->get('room_type');
             $price = $req->get('room_price');
+            $qty = $req->get('room_quantity');
+            $available = $req->get('room_available');
             $des = $req->get('room_description');
             $btn_action = $req->get('btn_action');
             
             $validation = Validator::make($req->all(), [
                 'room_type' => 'required',
                 'room_price'  => 'required|integer',
+                'room_quantity'  => 'required|integer',
+                'room_available'  => 'required|integer',
                 'room_description' => 'required',
             ]);
             
@@ -642,6 +427,8 @@ class AjaxController extends Controller
                     $room_type = new RoomType([
                         'name'    =>  $type,
                         'price'     =>  $price,
+                        'quantity' => $qty,
+                        'available' => $available,
                         'description' => $des,
                     ]);
                     $room_type->save();
@@ -653,6 +440,8 @@ class AjaxController extends Controller
                     $room_type = RoomType::find($id);
                     $room_type->name = $type;
                     $room_type->price =  $price;
+                    $room_type->quantity = $qty;
+                    $room_type->available = $available;
                     $room_type->description = $des;
                     $room_type->save();
                     
@@ -674,33 +463,12 @@ class AjaxController extends Controller
         if($req->ajax())
         {   
             $id = $req->get('id');
-            DB::table('type_room')
+            DB::table('room_types')
                 ->where('id', $id)
                 ->delete();       
             $output = '';
             $output .= '<div class="alert alert-danger">Data Deleted</div>';
             echo json_encode($output); 
-        }
-    }
-
-    public function postRoom(Request $req)
-    {      
-        if($req->ajax())
-        {    
-            $id = $req->get('id');
-            $type = $req->get('type');
-            $status = $req->get('stt');
-
-            $output = '';
-
-            $room = Room::find($id);
-            $room->id_type = $type;
-            $room->status = $status;
-            $room->save();
-            
-            $output .= '<div class="alert alert-success">Data Updated</div>';
-
-            echo json_encode($output);
         }
     }
 

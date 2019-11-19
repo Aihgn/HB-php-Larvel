@@ -14,17 +14,17 @@ class GroupsTableSeeder extends Seeder
     {
         $group = new Group();
 		$group->id = 1;
-		$group->name = 'Admin';
+		$group->group_name = 'Admin';
 		$group->save();
 
 		$group = new Group();
 		$group->id = 2;
-		$group->name = 'Manager';
+		$group->group_name = 'Manager';
 		$group->save();
 
 		$group = new Group();
 		$group->id = 3;
-		$group->name = 'Customer';
+		$group->group_name = 'Customer';
 		$group->save();
     }
 }
