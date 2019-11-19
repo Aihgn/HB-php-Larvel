@@ -20,65 +20,16 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-    //Admin
     public function getAdmin(Request $req)
     {
-        $req->user()->authorizeRoles(['receptionist', 'admin']);        
+        // $req->user()->authorizeRoles(['receptionist', 'admin']);        
         return view('page.admin.index_admin');
-    }
-
-    public function getManagerAcc(Request $req)
-    {
-        $req->user()->authorizeRoles('admin');
-        $acc = DB::table('roles')
-        ->join('role_user','roles.id','=','role_user.role_id')
-        ->join('users','users.id','=','role_user.user_id')
-        ->where('role_user.role_id', '=',3)
-        ->orWhere('role_user.role_id', '=',2)
-        ->orderBy('role_user.role_id', 'desc')
-        ->get();   
-        return view('page.admin.manager_account',compact('acc'));
-    }
-
-    public function getCheckin(Request $req)
-    {
-        $req->user()->authorizeRoles(['receptionist', 'admin']);
-        $date = date('Y-m-d', strtotime(Carbon::now()));
-        $res = DB::table('customer')
-        ->join('reservation','customer.id','reservation.id_customer')
-        ->where('reservation.date_in', '=',$date)
-        ->get();
-        return view('page.admin.check_in',compact('res'));
-    }
-
-    public function getCheckout(Request $req)
-    {
-        // $temp = DB::table('reservation')
-        //         // ->join('reservation_detail', 'reservation_detail.id_reservation', 'reservation.id')
-        //         // ->join('room','room.id','reservation_detail.id_room')
-        //         ->where('reservation.id','=', 3)
-        //         ->get();
-        //         dd($temp);
-        return view('page.admin.check_out');
-    }
-
-    public function getAllRes(Request $req)
-    {
-        return view('page.admin.reservation');
-    }
-
-    public function getManagerRoom(Request $req)
-    {
-        $req->user()->authorizeRoles(['admin']);        
-        $room_type = DB::table('type_room')->get();
-        return view('page.admin.manager_room',compact('room_type'));
-    }
-    
+    }    
 
     public function getBookOff()
     {
-        $room =Room::all();
-        return view('page.admin.booking',compact('room'));
+        $room_type = DB::table('room_types')->get();
+        return view('page.admin.booking', compact('room_type'));
     }
 
     public function postBookOff(Request $req)
@@ -108,6 +59,54 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('success', 'Book room success!');  
+    }
+
+    public function getCheckin(Request $req)
+    {
+        // $req->user()->authorizeRoles(['receptionist', 'admin']);
+        $date = date('Y-m-d', strtotime(Carbon::now()));
+        // $res = DB::table('customer')
+        // ->join('reservation','customer.id','reservation.id_customer')
+        // ->where('reservation.date_in', '=',$date)
+        // ->get();
+        return view('page.admin.check_in');
+            // ,compact('res'));
+    }
+
+    public function getCheckout(Request $req)
+    {
+        // $temp = DB::table('reservation')
+        //         // ->join('reservation_detail', 'reservation_detail.id_reservation', 'reservation.id')
+        //         // ->join('room','room.id','reservation_detail.id_room')
+        //         ->where('reservation.id','=', 3)
+        //         ->get();
+        //         dd($temp);
+        return view('page.admin.check_out');
+    }
+
+    public function getAllRes(Request $req)
+    {
+        return view('page.admin.reservation');
+    }
+
+    public function getManagerAcc(Request $req)
+    {
+        // $req->user()->authorizeRoles('admin');
+        $acc = DB::table('groups')        
+        ->join('users','users.group_id','=','groups.id')
+        ->where('groups.id', '=',1)
+        ->orWhere('groups.id', '=',2)
+        ->get();   
+
+        // dd($acc);
+        return view('page.admin.manager_account',compact('acc'));
+    }
+
+    public function getManagerRoom(Request $req)
+    {
+        // $req->user()->authorizeRoles(['admin']);        
+        $room_type = DB::table('room_types')->get();
+        return view('page.admin.manager_room',compact('room_type'));
     }
 
     public function genRoom($id_type,$exp_date,$id_res){

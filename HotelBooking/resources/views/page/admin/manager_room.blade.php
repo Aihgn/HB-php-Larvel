@@ -1,11 +1,11 @@
 @extends('layouts.admin_app')
-@section('content')
-	<div class="container main">
+@section('content')	
 		<div class="card p-2 mt-3">
-			<h4>Room type lists</h4>
-			<span id="mess_output"></span>
+			<h4>Room Type Lists</h4>
+			<button id="add_data"  type="button" data-toggle="modal" class="btn btn-danger col-6 col-md-3">+ Add New Room Type</button>
+			<span id="mess_output" class="m-4"></span>
 			<div class="table-responsive mt-2">
-				<table class="table table-dark table-hover">
+				<table class="table  table-hover">
 			    	<thead>
 			    		<tr>
 			    			<th>No.</th>	
@@ -14,20 +14,20 @@
 			    			<th>Quantity</th>
 			    			<th>Available</th>
 			    			<th>Description</th>
-			    			<th colspan="2" class="text-center"><button id="add_data"  type="button" data-toggle="modal" class="btn btn btn-primary">Add</button></th>
+			    			<th colspan="2"></th>
 			    		</tr>
 			    	</thead>
 			    	<tbody id="tb-room-type">  
-			    		@foreach($room_type as $i=>$row)
+			    		@foreach($room_type as $i=>$rt)
 			    			<tr>
 				    			<td>{{$i+1}}</td>
-				    			<td>{{$row->name}}</td>
-				    			<td>{{$row->price}}</td>
-				    			<td>10</td>   
-				    			<td>5</td>
-				    			<td>{{$row->description}}</td>	
-			    				<td><button id="{{$row->id}}"  type="button" data-toggle="modal" class="edit-type-btn btn btn btn-success">Edit</button></td>
-				    			<td><button id="{{$row->id}}"  type="button" data-toggle="modal" class="del-type-btn btn btn btn-danger">Delete</button></td>
+				    			<td>{{$rt->name}}</td>
+				    			<td>{{$rt->price}}</td>
+				    			<td>{{$rt->quantity}}</td>   
+				    			<td>{{$rt->available}}</td>
+				    			<td>{{$rt->description}}</td>
+			    				<td><button id="{{$rt->id}}"  type="button" data-toggle="modal" class="edit-type-btn btn btn-success">Edit</button></td>
+				    			<td><button id="{{$rt->id}}"  type="button" data-toggle="modal" class="del-type-btn btn btn-danger">Delete</button></td>
 				    		</tr>
 			    		@endforeach  			    		
 			    	</tbody>
@@ -44,22 +44,30 @@
 		                </div>
 		                <div class="modal-body">
 		                    {{csrf_field()}}		                   
-		                    <div class="form-group">
+		                    <div class="form-group m-3">
 		                        <label>Room Type</label>
-		                        <input type="text" name="room_type" id="room_type" class="form-control" />
+		                        <input type="text" name="room_type" id="room_type" class="form-control mt-3" />
 		                    </div>
-		                    <div class="form-group">
+		                    <div class="form-group m-3">
 		                        <label>Price</label>
-		                        <input type="text" name="room_price" id="room_price" class="form-control" />
+		                        <input type="text" name="room_price" id="room_price" class="form-control mt-3" />
 		                    </div>
-		                    <div class="form-group">
+		                    <div class="form-group m-3">
+		                        <label>Quantity</label>	
+		                        <input type="text" name="room_quantity" id="room_quantity" class="form-control mt-3" />
+		                    </div>
+		                    <div class="form-group m-3">
+		                        <label>Available</label>	
+		                        <input type="text" name="room_available" id="room_available" class="form-control mt-3" />
+		                    </div>
+		                    <div class="form-group m-3">
 		                        <label>Description</label>	
-		                        <input type="text" name="room_description" id="room_description" class="form-control" />
+		                        <input type="text" name="room_description" id="room_description" class="form-control mt-3" />
 		                    </div>
 		                </div>
 		                <div class="modal-footer">
 		                    <input type="hidden" name="room_type_id" id="room_type_id" value="" />
-		                     <input type="hidden" name="button_action" id="button_action" value="insert" />
+		                    <input type="hidden" name="button_action" id="button_action" value="insert" />
                     		<input type="submit" name="submit" id="action" value="Add" class="btn btn-success" />
 		                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 		                </div>
@@ -68,26 +76,8 @@
 		    </div>
 		</div>
 	
-	</div>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".room-type").click(function (e) {
-				e.preventDefault()
-			    $header = $(this);
-			    //getting the next element
-			    $content = $header.next();
-			    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-			    $content.slideToggle(500, function () {
-			        //execute this after slideToggle is done
-			        //change text of header based on visibility of content div
-			        $header.text(function () {
-			            //change text based on condition
-			            return $content.is(":visible") ? "- Collapse" : "+ Room manager";
-			        });
-			    });
-			    getRoom();
-			});
-
+		$(document).ready(function(){	
 			function getRoomType()
 			{
 				$.ajax({
@@ -100,22 +90,7 @@
 						$('#tb-room-type').html(data.table_data);			
 					}
 				})
-			}
-
-			$(document).on('keyup', '#search', function(){
-				var query = $(this).val();
-				fetch_room_data(query);
-			});	
-
-			$(document).on('change', '.sel-room-type', function (e) {
-			    var optionSelected = $("option:selected", this);
-			    var valueSelected = this.value;					   	  
-			});
-
-			$(document).on('change', '.sel-room-stt', function (e) {
-			    var optionSelected = $("option:selected", this);
-			    var valueSelected = this.value;			  
-			});
+			};			
 
 			$(document).on('click', '.edit-type-btn', function(){
 		        var id = this.id;
@@ -129,7 +104,8 @@
 		            {
 		                $('#room_type_id').val(id);
 		                $('#roomTypeModal').modal('show');
-		                $('#action').val('Edit');          
+		                $('#action').val('Edit');
+		                $('.modal-title').html('Edit Data');
 		                $('#button_action').val('update');
 		            }
 		        })
@@ -144,18 +120,20 @@
 		        $('.modal-title').text('Add Data');
 		    });
 
-		    $('#room_type_form').on('submit', function(event){
-		        event.preventDefault();
+		    $('#room_type_form').on('submit', function(e){
+		        e.preventDefault();
 		        $('#mess_output').html('');
 		        var room_type = $('#room_type').val();
 		        var room_price = $('#room_price').val();
+		        var room_quantity = $('#room_quantity').val();
+		        var room_available = $('#room_available').val();
 		        var room_description = $('#room_description').val();
 		        var room_type_id = $('#room_type_id').val();
-		        var btn_action = $('#button_action').val();	          
+		        var btn_action = $('#button_action').val();
 		        $.ajax({
 		            url:"{{ route('post_room_type') }}",
 		            method:"POST",
-		            data:{room_type, room_price, room_description,room_type_id,btn_action, _token: '{{csrf_token()}}'},
+		            data:{room_type, room_price, room_quantity, room_available, room_description,room_type_id,btn_action, _token: '{{csrf_token()}}'},
 		            dataType:"json",
 		            success:function(data)
 		            {
@@ -192,6 +170,7 @@
 						success:function(data)
 						{	
 							$('#mess_output').html(data);
+							getRoomType();
 						}
 					});					
 					getRoomType();

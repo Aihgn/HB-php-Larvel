@@ -1,34 +1,12 @@
 @extends('layouts.admin_app')
 @section('content')
-	
-	<div class="col-12 col-md-8 mt-4 mb-4 p-2 card">		
-		<button class="add-new btn-admin col-5 p-2">+ Add new manager</button>
-		<div class="content-collapse">
-			<div class="input-field mt-3 mb-5"> 
-                <label for="search">{{ __('Search') }}</label>
-                <input id="search" type="text" placeholder="Enter name or email" required autofocus>
-            </div>
 
-            <table class="table table-dark table-hover">
-		    	<thead>
-		    		<tr>
-		    			<th>No.</th>	
-		    			<th>Name</th>    			
-		    			<th>Email</th>
-		    			<th></th> 
-		    		</tr>
-		    	</thead>
-		    	<tbody id="tb-search">    			    		
-		    	</tbody>
-		    </table>
-	    </div>
-	</div>
 
 	<div class="card pt-3">
 		<h4 class="m-3">Team manager</h4>
 		<span id="mess_output"></span>
 		<div class="table-responsive">
-			<table class="table table-dark table-hover">
+			<table class="table table-hover">
 		    	<thead>
 		    		<tr>
 		    			<th>No.</th>	
@@ -45,12 +23,12 @@
 		    			<td>{{$i+1}}</td>
 		    			<td>{{$r->name}}</td>
 		    			<td>{{$r->email}}</td>   
-		    			@if($r->role_id == 2) 			
-		    				<td>{{$r->description}}</td>
-		    				<td><a href="#" id='{{$r->user_id}}' class="remove-role btn btn-danger pb-2 pt-2 pl-1 pr-1">Remove</a></td>    	
-		    				<td><a href="#" id='{{$r->user_id}}' class="delete-acc btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</a></td> 			
+		    			@if($r->group_id == 2) 			
+		    				<td>{{$r->group_name}}</td>
+		    				<td><a href="#" id='{{$r->id}}' class="remove-role btn btn-danger pb-2 pt-2 pl-1 pr-1">Remove</a></td>    	
+		    				<td><a href="#" id='{{$r->id}}' class="delete-acc btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</a></td> 			
 		    			@else
-		    				<td>{{$r->description}}</td>
+		    				<td>{{$r->group_name}}</td>
 		    			@endif	
 		    		</tr>    		
 		    		@endforeach
@@ -58,6 +36,29 @@
 		    </table>
 	    </div>
     </div>
+
+    <div class="col-12 mt-4 mb-4 p-2 card">		
+		<button class="add-new btn-admin col-5 p-2">+ Add new manager</button>
+		<div class="content-collapse">
+			<div class="input-field mt-3 mb-5"> 
+                <label for="search">Search</label>
+                <input id="search" type="text" placeholder="Enter name or email" required autofocus>
+            </div>
+
+            <table class="table table-hover">
+		    	<thead>
+		    		<tr>
+		    			<th>No.</th>	
+		    			<th>Name</th>    			
+		    			<th>Email</th>
+		    			<th></th> 
+		    		</tr>
+		    	</thead>
+		    	<tbody id="tb-search">    			    		
+		    	</tbody>
+		    </table>
+	    </div>
+	</div>
 
     <script type="text/javascript">
     	$(document).ready(function(){
@@ -93,14 +94,9 @@
 
 	    	$(".add-new").click(function () {
 			    $header = $(this);
-			    //getting the next element
 			    $content = $header.next();
-			    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
 			    $content.slideToggle(500, function () {
-			        //execute this after slideToggle is done
-			        //change text of header based on visibility of content div
 			        $header.text(function () {
-			            //change text based on condition
 			            return $content.is(":visible") ? "- Collapse" : "+ Add new manager";
 			        });
 			    });

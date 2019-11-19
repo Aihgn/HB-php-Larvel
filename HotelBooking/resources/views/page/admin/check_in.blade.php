@@ -13,7 +13,7 @@
             <input id="search" type="text" placeholder="" required autofocus>
         </div>
         <h5>List reservation</h5>
-    	<table class="table table-dark table-hover">
+    	<table class="table table-hover">
         	<thead>
         		<tr>
         			<th>No.</th>	

@@ -16,7 +16,11 @@ class RoomType extends Migration
         Schema::create('room_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->float('price');              
+            $table->float('price');
+            $table->integer('quantity');
+            $table->integer('available');
+            $table->string('image')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
