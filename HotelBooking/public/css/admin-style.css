@@ -1315,7 +1315,7 @@ button.close {
 
 .card 
 {
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	/*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);*/
 	transition: 0.3s;
 	position: relative;
 	display: -ms-flexbox;
@@ -1326,7 +1326,7 @@ button.close {
 	word-wrap: break-word;
 	background-color: #fff;
 	background-clip: border-box;
-	border: 1px solid rgba(0, 0, 0, 0.125);
+	/*border: 1px solid rgba(0, 0, 0, 0.125);*/
 	border-radius: 0.5rem;
 }
 
@@ -1334,11 +1334,6 @@ button.close {
 {
   text-align: center;
   color: #000;
-}
-
-.card:hover 
-{
-  	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 
@@ -1688,27 +1683,16 @@ button.close {
 body
 {
 	font-family: 'Roboto' , sans-serif;
-	background: #f2f7fb;
+	background: #edeff3;
 	margin: 0;
-	overflow-x: hidden;
+	/*overflow-x: hidden;*/
+  color: #263544;
 }
 
 a
 {
   color: #000;
 	text-decoration: none;
-}
-
-select
-{
-    border: none;
-    border-bottom: 1px solid;
-    font-size: 1rem;
-    padding: 10px;
-    font-weight: 100;
-    outline: none;
-    color: #333;
-    line-height: 1.5rem;
 }
 
 .wrap
@@ -1803,6 +1787,7 @@ header
 	background-color: #fff;
 	grid-column: 3 / 13;
 	margin-top: 8px;
+  border-radius: 0.5rem;
 }
 
 .icon-header{
@@ -1817,14 +1802,14 @@ header
 }*/
 
 header .search-area input{
-	background: #f2f7fb;
+	background: #edeff3;
 	border-radius: 15px;
 	border: none;
 	font-size: 1.2rem;
 	padding: 10px;
 	font-weight: 100;
 	outline: none;
-	color: #333;
+	color: #263544;
 	line-height: 1.5rem;
 }
 
@@ -1832,12 +1817,13 @@ header .user-area
 {
 	/*display: inline-block;*/
 	margin-left: auto;
+  margin-right: 1rem;
 	padding: 10px;
 }
 
 header a
 {
-	display: inline-block;
+	/*display: inline-block;*/
 	text-decoration: none;
 	padding-right: 20px;
 	color: #333;
@@ -1868,20 +1854,35 @@ header .notification .circle
 .content
 {
 	grid-column: 3 / 13;
-	padding:0 15px;
+	padding:0 0.5rem;
 }
 
-.input-field input {
-   background-color: transparent;
-   display: block;
-   border: none;
-   outline: none;
-   font-size: 1em;
-   width: 100%;
-   border-bottom: 1px solid #51555a!important;
+.input-field input, select 
+{
+  background: #fff;
+  border-radius: 15px;
+  font-size: 1rem;
+  padding: 10px;
+  margin: 10px;
+  font-weight: 100;
+  outline: none;
+  color: #263544;
+  line-height: 1.2rem;
+  width: 100%;
+  border: 1px solid #ced4da;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.input-field input:focus
+{
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(26,80,137,0.25);
 }
 
-.btn-admin{
+
+/*.btn-admin{
   background-color: #dc3545!important;
   color: #fff;
   border: none;
@@ -1894,7 +1895,7 @@ header .notification .circle
 }
 .btn-admin:focus,
 .btn-admin:active{
-  outline: none;
+  outline: none;*/
 }
 /*date ranger picker=========================================*/
 
@@ -1930,7 +1931,7 @@ header .notification .circle
 }
 
 /*Media screen===========================================*/
-@media screen and (max-width: 1200px)
+@media screen and (max-width: 1355px)
 {
   #side-menu
   {
@@ -1999,14 +2000,15 @@ header .notification .circle
 
 	header .search-area
 	{
-		justify-content: center;
-		margin-top: .75rem;
+		/*justify-content: center;
+		margin-top: .75rem;*/
+    display: none;
 	}
 
-	.show-menu-btn
+/*	.show-menu-btn
 	{
 		flex: 1 0 20%;
-	}
+	}*/
 
 }
 

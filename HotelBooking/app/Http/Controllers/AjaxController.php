@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 use Carbon;
 use App\RoomType;
+use App\User;
 
 class AjaxController extends Controller
 {
@@ -202,71 +204,45 @@ class AjaxController extends Controller
         }
     }
 
-    public function liveSearch(Request $req)
-    {
-        if($req->ajax())
-        {   
-            $output = '';
-            $query = $req->get('query');
-            if($query != '')
-            {
-                $data = DB::table('users')
-                ->join('role_user','users.id','=','role_user.user_id')
-                ->where('role_user.role_id', '=',1)
-                ->where(function ($q)  use ($query) {
-                    $q->where('name', 'like', '%'.$query.'%')
-                          ->orWhere('email', 'like', '%'.$query.'%');
-                })            
-                ->get();
-            }
-            else
-            {
-                $data = DB::table('users')
-                ->join('role_user','users.id','=','role_user.user_id')
-                ->where('role_user.role_id', '=',1)
-                ->get();
-            }
-            $total_row = $data->count();
-            if($total_row > 0)
-            {
-                foreach($data as $i=>$row)
-                {
-                    $output .= '
-                    <tr>
-                        <td>'.($i+1).'</td>
-                        <td>'.$row->name.'</td>
-                        <td>'.$row->email.'</td>     
-                        <td><a href="#" id="'.$row->user_id.'" class="add-role btn btn-success pb-2 pt-2 pl-1 pr-1">Add</a></td>                
-                    </tr>
-                    ';
-               }
-            }
-            else
-            {
-                $output = '
-                   <tr>
-                        <td align="center" colspan="5">No Data Found</td>
-                   </tr>
-                   ';
-            }
-            $data = array(
-                'table_data'  => $output,
-                'total_data'  => $total_row
-            );
-            echo json_encode($data);
-        }
-    }
-
-    public function addRole(Request $req)
+// Manager account gr
+    public function addManager(Request $req)
     { 
         if($req->ajax())
         {   
-            $id = $req->get('id');
-            DB::table('role_user')
-                ->where('user_id', $id)
-                ->update(['role_id' => 2]);
-            $output = '';
-            $output .= '<div class="alert alert-success">Data Updated</div>';
+            $name = $req->get('name');
+            $email = $req->get('email');
+            $group = $req->get('group');
+
+             $validation = Validator::make($req->all(), [
+                'name' => 'required',
+                'email'  => 'required|unique:users',
+            ]);
+            
+            $error_array = array();
+            $success_output = '';
+
+            if ($validation->fails())
+            {
+                foreach ($validation->messages()->getMessages() as $field_name => $messages)
+                {
+                    $error_array[] = $messages; 
+                }
+            }
+            else
+            {
+                $manager = new User([
+                            'name'    =>  $name,
+                            'email'     =>  $email,
+                            'group_id' => $group,
+                            'password' => Hash::make('123456'),
+                        ]);
+                $manager->save();
+                $success_output = '<div class="alert alert-success">Data Inserted</div>';
+            }
+            $output = array(
+                'error'     =>  $error_array,
+                'success'   =>  $success_output
+            );
             echo json_encode($output);
         }
     }
@@ -276,32 +252,30 @@ class AjaxController extends Controller
         if($req->ajax())
         {
             $output='';
-            $acc = DB::table('roles')
-                ->join('role_user','roles.id','=','role_user.role_id')
-                ->join('users','users.id','=','role_user.user_id')
-                ->where('role_user.role_id', '=',3)
-                ->orWhere('role_user.role_id', '=',2)
-                ->orderBy('role_user.role_id', 'desc')
+            $acc = DB::table('groups')        
+                ->join('users','users.group_id','=','groups.id')
+                ->where('groups.id', '=',1)
+                ->orWhere('groups.id', '=',2)
                 ->get();
-            foreach($acc as $i=>$row)
+            foreach($acc as $i=>$r)
             {
                 $output .= '
                     <tr>
                         <td>'.($i+1).'</td>
-                        <td>'.$row->name.'</td>
-                        <td>'.$row->email.'</td>  
-                        <td>'.$row->description.'</td>                
+                        <td>'.($r->name).'</td>
+                        <td>'.($r->email).'</td>                
                     ';
-                if($row->role_id==2)
+                if($r->group_id==2)
                 {
                     $output .= '                    
-                        <td><a href="#" id="'.$row->user_id.' "class="remove-role btn btn-danger pb-2 pt-2 pl-1 pr-1">Remove</a></td>      
-                        <td><a href="#" id="'.$row->user_id.'" class="delete-acc btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</a></td>
-                    </tr>
+                        <td>'.($r->group_name).'</td>
+                            <td><a href="#" id="'.($r->id).'" class="remove-role btn btn-danger pb-2 pt-2 pl-1 pr-1">Remove</a></td>
+                            <td><a href="#" id="'.($r->id).'" class="delete-acc btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</a></td>
                     ';
                 }
                 else{
-                    $output .= '</tr>';
+                    $output .= '<td>'.($r->group_name).'</td>
+                            <td colspan="2"></td>';
                 }
             }
             $data = array(
@@ -316,9 +290,9 @@ class AjaxController extends Controller
         if($req->ajax())
         {   
             $id = $req->get('id');
-            DB::table('role_user')
-                ->where('user_id', $id)
-                ->update(['role_id' => 1]);
+            DB::table('users')
+                ->where('id', $id)
+                ->update(['group_id' => 3]);
             $output = '';
             $output .= '<div class="alert alert-success">Data Updated</div>';
             echo json_encode($output);
@@ -330,20 +304,16 @@ class AjaxController extends Controller
         if($req->ajax())
         {   
             $id = $req->get('id');
-            DB::table('role_user')
-                ->where('user_id', $id)
-                ->delete();
             DB::table('users')
                 ->where('id', $id)
-                ->delete();
-            DB::table('customer')
-                ->where('id_user', $id)
                 ->delete();
             $output = '';
             $output .= '<div class="alert alert-danger">Data Deleted</div>';
             echo json_encode($output);            
         }
     }
+
+
 // Manager Room
     public function getRoomType(Request $req)
     {
@@ -407,7 +377,7 @@ class AjaxController extends Controller
                 'room_price'  => 'required|integer',
                 'room_quantity'  => 'required|integer',
                 'room_available'  => 'required|integer',
-                'room_description' => 'required',
+                'room_description' => '',
             ]);
             
             $error_array = array();

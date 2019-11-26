@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();      
             $table->string('password');
             $table->integer('discount_percent')->nullable();
-            $table->string('address');
+            $table->string('address')->nullable();;
             $table->integer('group_id');
             $table->rememberToken();
             $table->timestamps();
