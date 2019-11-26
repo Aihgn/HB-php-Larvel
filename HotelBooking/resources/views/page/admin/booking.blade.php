@@ -1,6 +1,6 @@
 @extends('layouts.admin_app')
 @section('content')
-	<div class="card mt-4">		
+	<div class="card p-2 mt-3">		
 		@if (Session::has('success'))
 			<span class="alert alert-success">
 				{!! \Session::get('success') !!}
@@ -9,17 +9,16 @@
 		<form method="POST" id="post-book" action="{{ route('book_off') }}">
 		@csrf
 			
-		
-			<div id="date-pick mt-4" class="tab-pane">
-				<h4 class="mt-2 mb-3 ml-4">Pick Date</h4>
-				<div class="m-4 input-field col-4">
-					<input type="text" id="date" name="datefilter" value="" placeholder=""/>
+			<h2 class="m-3">Pick Date</h2>
+			<div id="date-pick" class="tab-pane">
+				<div class="m-4 input-field col-md-4">
+					<input type="text" id="date" name="datefilter" value="" placeholder="Select Date*"/>
 				</div>	
 			</div>
 
 			
 		
-			<h4 class="mt-2 mb-1 ml-4">Select Room</h4>
+			<h2 class="m-3">Select Room</h2>
 			<input type="hidden" name="qty_room" id="qty_room" value="" />
 			<div class="container mb-4 ml-0">
 				<div class="sel-type mt-3">
@@ -35,40 +34,44 @@
 			</div>
 
 
-			{{-- - --}}
-			<div class="mb-1 ml-4 mt-4">
-				<h4 class="">Guest infomation</h4>
-				<div class="input-field m-4"> 
+			
+			<h2 class="m-3">Guest infomation</h2>
+			<div class="row">
+				<div class="input-field m-4 col-md-5"> 
 					<label for="name">Full name:</label>
-					<input id="name" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} " value="" required>	                
+					<input id="name" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Enter name*" required>	                
 				</div>
-				<div class="input-field m-4">
+				<div class="input-field m-4 col-md-5">
 					<label for="email">Email:</label>
-					<input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} " name="email" value="" required>
-
+					<input id="email" type="email" class="{{$errors->has('email') ? ' is-invalid' : '' }} " name="email" placeholder="Enter email*" required>
 					@if ($errors->has('email'))
 						<div class="alert-error text-center mt-4">
 							<strong>*{{ $errors->first('email') }}</strong>
 						</div>
 					@endif
 				</div>
-				<div class="input-field m-4">
+				<div class="input-field m-4 col-md-5">
 					<label for="phone_number">Phone number:</label>
-					<input id="phone_number" type="text" class="" name="phone_number" value="" required>   
+					<input id="phone_number" type="text" class="" name="phone_number" placeholder="Enter phone number*" required>   
+				</div>
+				<div class="input-field m-4 col-md-5">
+					<label for="address">Address:</label>
+					<input id="address" type="text" class="" name="address" placeholder="Enter address*" required>
 				</div>
 			</div>
+		
+			
+			<div class="input-field m-4 row">
+				<h2 class="m-3">Total</h2>
+				<input id="total" type="text" class="ml-4 col-md-5" name="total" readonly>
+			</div>
 
 
-			{{--  --}}
-			<div class="input-field m-4">
-				<h5 class="">Total</h5>
-				<input id="total" type="text" class="" name="total" value="" required readonly="">   
-			</div>
-			<div class="button-div text-center mt-4 col-12 col-md-4">
-				<button type="submit" class="book btn-admin p-2 mb-4">Book now</button>                                
-			</div>
+			<button type="submit" class="book btn btn-danger m-3 col-6 col-md-3">Book now</button>
+			
 		</form>
 	</div>
+	
 	<script type="text/javascript">
 		$(document).ready(function(){
 

@@ -1,11 +1,10 @@
 @extends('layouts.admin_app')
 @section('content')	
 		<div class="card p-2 mt-3">
-			<h4>Room Type Lists</h4>
-			<button id="add_data"  type="button" data-toggle="modal" class="btn btn-danger col-6 col-md-3">+ Add New Room Type</button>
-			<span id="mess_output" class="m-4"></span>
+			<h2 class="m-3">Room Type Lists</h2>
+			<button id="add_data"  type="button" data-toggle="modal" class="btn btn-danger m-3 col-6 col-md-3">+ Add New Room Type</button>
 			<div class="table-responsive mt-2">
-				<table class="table  table-hover">
+				<table class="table table-striped">
 			    	<thead>
 			    		<tr>
 			    			<th>No.</th>	
@@ -14,7 +13,7 @@
 			    			<th>Quantity</th>
 			    			<th>Available</th>
 			    			<th>Description</th>
-			    			<th colspan="2"></th>
+			    			<th colspan="2">Action</th>
 			    		</tr>
 			    	</thead>
 			    	<tbody id="tb-room-type">  
@@ -75,6 +74,22 @@
 		        </div>
 		    </div>
 		</div>
+
+		<div id="messOutputModal" class="modal fade" role="dialog">
+	   	<div class="modal-dialog">
+				<div class="modal-content" style="text-align: center;">
+					<div class="modal-header">
+						<h2>Notification</h2>
+					</div>
+					<div class="modal-body">
+						<span id="mess_output" class="m-3"></span>
+					</div>
+				 	<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+	     </div>
+	  </div>
 	
 	<script type="text/javascript">
 		$(document).ready(function(){	
@@ -92,7 +107,8 @@
 				})
 			};			
 
-			$(document).on('click', '.edit-type-btn', function(){
+			$(document).on('click', '.edit-type-btn', function()
+			{
 		        var id = this.id;
 		        $('#mess_output').html('');
 		        $.ajax({
@@ -102,6 +118,11 @@
 		            dataType:'json',
 		            success:function(data)
 		            {
+		            	$('#room_type').val(data.type);
+		                $('#room_price').val(data.price);
+		                $('#room_quantity').val(data.quantity);
+		                $('#room_available').val(data.available);
+		                $('#room_description').val(data.description);
 		                $('#room_type_id').val(id);
 		                $('#roomTypeModal').modal('show');
 		                $('#action').val('Edit');
@@ -109,18 +130,20 @@
 		                $('#button_action').val('update');
 		            }
 		        })
-		    });
+		   });
 
-		    $(document).on('click', '#add_data',function(){
+		   $(document).on('click', '#add_data',function()
+		   {
 		        $('#roomTypeModal').modal('show');
 		        $('#room_type_form')[0].reset();
 		        $('#mess_output').html('');
 		        $('#button_action').val('insert');
 		        $('#action').val('Add');
 		        $('.modal-title').text('Add Data');
-		    });
+		   });
 
-		    $('#room_type_form').on('submit', function(e){
+		   $('#room_type_form').on('submit', function(e)
+		   {
 		        e.preventDefault();
 		        $('#mess_output').html('');
 		        var room_type = $('#room_type').val();
@@ -152,14 +175,16 @@
 		                	$('#mess_output').html(data.success);
 		                    $('#room_type_form')[0].reset();
 		                    $('#roomTypeModal').modal('hide');
+		                    $('#messOutputModal').modal('show');
 		                }
 		            }
 		        })
-		    });
+		   });
 
-		    $(document).on('click', '.del-type-btn',function(){
-		        var id = this.id;
-		        $('#mess_output').html('');
+	    	$(document).on('click', '.del-type-btn',function()
+	    	{
+	    	  	var id = this.id;
+	        	$('#mess_output').html('');
 				if(confirm("Are you sure you want to remove this records?"))
 				{
 					$.ajax({
@@ -171,11 +196,12 @@
 						{	
 							$('#mess_output').html(data);
 							getRoomType();
+							$('#messOutputModal').modal('show');
 						}
 					});					
 					getRoomType();
 				}
-		    });
+	    	});
 		});
 	</script>
 @endsection

@@ -100,23 +100,6 @@
 		});	
 		
 		
-		// //Date Picker
-		
-		// var dateSelect     = $('#flight-datepicker-1');
-		// var dateDepart     = $('#start-date-1');
-		// var dateReturn     = $('#end-date-1');
-		// var spanDepart     = $('.date-depart');
-		// var spanReturn     = $('.date-return');
-		// var spanDateFormat = 'ddd, MMMM D yyyy';
-
-		// dateSelect.datepicker({
-		// 	// autoclose: true,
-		// 	format: "dd.M",
-		// 	maxViewMode: 0,
-		// 	startDate: "now"
-		// });
-
-		
 		//Scroll back to top
 	
 		var offset = 300;
@@ -194,119 +177,107 @@
 		});
 
 		
-		/* Gallery Carousels */
+		// /* Gallery Carousels */
 	 
-		$("#owl-sep-2").owlCarousel({
-			navigation: false,
-			pagination : false,
-			slideSpeed : 500,
-			paginationSpeed : 500,
-			items : 7,
-			itemsDesktop : [1000,4], 
-			itemsDesktopSmall : [900,3],
-			itemsTablet: [600,2], 
-			itemsMobile : false,
-			autoPlay: 5000
-		});
+		// $("#owl-sep-2").owlCarousel({
+		// 	navigation: false,
+		// 	pagination : false,
+		// 	slideSpeed : 500,
+		// 	paginationSpeed : 500,
+		// 	items : 7,
+		// 	itemsDesktop : [1000,4], 
+		// 	itemsDesktopSmall : [900,3],
+		// 	itemsTablet: [600,2], 
+		// 	itemsMobile : false,
+		// 	autoPlay: 5000
+		// });
 		
 		
-		//Rooms Carousel
+		// //Rooms Carousel
  
-		  var sync1 = $("#rooms-sync1");
-		  var sync2 = $("#rooms-sync2");
+		//   var sync1 = $("#rooms-sync1");
+		//   var sync2 = $("#rooms-sync2");
 		 
-		  sync1.owlCarousel({
-			singleItem : true,
-			slideSpeed : 400,
-			transitionStyle : "goDown",
-			pagination:false,
-			autoPlay : 6000,
-			afterAction : syncPosition
-		  });
-		(function ($) { 
-			var owl = $("#rooms-sync1");
-			owl.owlCarousel();	
+		//   sync1.owlCarousel({
+		// 	singleItem : true,
+		// 	slideSpeed : 400,
+		// 	transitionStyle : "goDown",
+		// 	pagination:false,
+		// 	autoPlay : 6000,
+		// 	afterAction : syncPosition
+		//   });
+		// (function ($) { 
+		// 	var owl = $("#rooms-sync1");
+		// 	owl.owlCarousel();	
 			
-			// Custom Navigation Events
-			$(".next-rooms-sync-1").on('click', function(){
-				owl.trigger('owl.next');
-			})
-			$(".prev-rooms-sync-1").on('click', function(){
-				owl.trigger('owl.prev');
-			})	
-		} )(jQuery);
+		// 	// Custom Navigation Events
+		// 	$(".next-rooms-sync-1").on('click', function(){
+		// 		owl.trigger('owl.next');
+		// 	})
+		// 	$(".prev-rooms-sync-1").on('click', function(){
+		// 		owl.trigger('owl.prev');
+		// 	})	
+		// } )(jQuery);
 		  
-		  sync2.owlCarousel({
-			items : 5,
-			itemsDesktop      : [1199,4],
-			itemsDesktopSmall     : [979,3],
-			itemsTablet       : [768,3],
-			itemsMobile       : [479,2],
-			pagination: false,
-			responsiveRefreshRate : 100,
-			afterInit : function(el){
-			  el.find(".owl-item").eq(0).addClass("synced");
-			}
-		  });
+		//   sync2.owlCarousel({
+		// 	items : 5,
+		// 	itemsDesktop      : [1199,4],
+		// 	itemsDesktopSmall     : [979,3],
+		// 	itemsTablet       : [768,3],
+		// 	itemsMobile       : [479,2],
+		// 	pagination: false,
+		// 	responsiveRefreshRate : 100,
+		// 	afterInit : function(el){
+		// 	  el.find(".owl-item").eq(0).addClass("synced");
+		// 	}
+		//   });
 		 
-		  function syncPosition(el){
-			var current = this.currentItem;
-			$("#rooms-sync2")
-			  .find(".owl-item")
-			  .removeClass("synced")
-			  .eq(current)
-			  .addClass("synced")
-			if($("#rooms-sync2").data("owlCarousel") !== undefined){
-			  center(current)
-			}
-		  }
+		//   function syncPosition(el){
+		// 	var current = this.currentItem;
+		// 	$("#rooms-sync2")
+		// 	  .find(".owl-item")
+		// 	  .removeClass("synced")
+		// 	  .eq(current)
+		// 	  .addClass("synced")
+		// 	if($("#rooms-sync2").data("owlCarousel") !== undefined){
+		// 	  center(current)
+		// 	}
+		//   }
 		 
-		  $("#rooms-sync2").on("click", ".owl-item", function(e){
-			e.preventDefault();
-			var number = $(this).data("owlItem");
-			sync1.trigger("owl.goTo",number);
-		  });
+		//   $("#rooms-sync2").on("click", ".owl-item", function(e){
+		// 	e.preventDefault();
+		// 	var number = $(this).data("owlItem");
+		// 	sync1.trigger("owl.goTo",number);
+		//   });
 		 
-		  function center(number){
-			var sync2visible = sync2.data("owlCarousel").owl.visibleItems;
-			var num = number;
-			var found = false;
-			for(var i in sync2visible){
-			  if(num === sync2visible[i]){
-				var found = true;
-			  }
-			}
+		//   function center(number){
+		// 	var sync2visible = sync2.data("owlCarousel").owl.visibleItems;
+		// 	var num = number;
+		// 	var found = false;
+		// 	for(var i in sync2visible){
+		// 	  if(num === sync2visible[i]){
+		// 		var found = true;
+		// 	  }
+		// 	}
 		 
-			if(found===false){
-			  if(num>sync2visible[sync2visible.length-1]){
-				sync2.trigger("owl.goTo", num - sync2visible.length+2)
-			  }else{
-				if(num - 1 === -1){
-				  num = 0;
-				}
-				sync2.trigger("owl.goTo", num);
-			  }
-			} else if(num === sync2visible[sync2visible.length-1]){
-			  sync2.trigger("owl.goTo", sync2visible[1])
-			} else if(num === sync2visible[0]){
-			  sync2.trigger("owl.goTo", num-1)
-			}
+		// 	if(found===false){
+		// 	  if(num>sync2visible[sync2visible.length-1]){
+		// 		sync2.trigger("owl.goTo", num - sync2visible.length+2)
+		// 	  }else{
+		// 		if(num - 1 === -1){
+		// 		  num = 0;
+		// 		}
+		// 		sync2.trigger("owl.goTo", num);
+		// 	  }
+		// 	} else if(num === sync2visible[sync2visible.length-1]){
+		// 	  sync2.trigger("owl.goTo", sync2visible[1])
+		// 	} else if(num === sync2visible[0]){
+		// 	  sync2.trigger("owl.goTo", num-1)
+		// 	}
 			
-		  }
+		//   }
 
 		
-		
-		// /* Range slider */
-		
-		// var range = $('.input-range'),
-		// value = $('.range-value');
-
-		// value.html(range.attr('value') + ' $');
-
-		// range.on('input', function() {
-		// 	value.html(this.value + ' $');
-		// });		
-					
 	});
 	//Account
 	
@@ -321,4 +292,4 @@
 	
 
 	
-  })(jQuery); 
+})(jQuery); 
