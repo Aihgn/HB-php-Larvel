@@ -75,14 +75,32 @@ class AjaxController extends Controller
 
 
 
-    //book off
+//book off
+    public function getTotal(Request $req)
+    {
+        if($req->ajax())
+        {
+            $qty = $req->get('qty');
+            $count = DB::table('room_types')->count();
+            $total =0;
+            for($i=0; $i<$count; $i++)
+            {
+                $id = $i+1;
+                $price = DB::table('room_types')
+                ->where('id','=',$id)
+                ->value('price');
+                $total += $price*$qty[$i];
+            }
+            echo json_encode($total);
+        }
+    }
+
     public function getResInfo(Request $req)
     {        
         if($req->ajax())
         {   
             $date = date('Y-m-d', strtotime($req->get('date')));
             $stt =(int)($req->get('stt'));
-
             if($stt == 0 )
             {
                 $res = DB::table('customer')
@@ -158,7 +176,6 @@ class AjaxController extends Controller
                      $output .= '<td><span class="stt-c p-2">Cancel</span></td></tr>';
                 }                       
            } 
-
             echo json_encode($output);
         }
     }
@@ -439,18 +456,6 @@ class AjaxController extends Controller
             $output = '';
             $output .= '<div class="alert alert-danger">Data Deleted</div>';
             echo json_encode($output); 
-        }
-    }
-
-    public function getPrice(Request $req){
-        if($req->ajax())
-        {    
-            $id = $req->get('p_id');
-            $price = DB::table('type_room')
-            ->where('id','=',$id)
-            ->value('price');
-            // dd($price);
-            echo json_encode($price);
         }
     }
 }

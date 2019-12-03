@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class ResDetail extends Model
 {
-	protected $table = "resdetails";
+	protected $table = "res_details";
+
+	protected $fillable = [
+        'reservation_id', 'room_type_id','quantity', 'checkin_date', 'checkout_date'
+    ];
 
 	public function reservation()
 	{

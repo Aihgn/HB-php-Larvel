@@ -699,6 +699,7 @@
 
 
 .btn {
+  cursor: pointer;
   display: inline-block;
   font-weight: 400;
   color: #212529;
@@ -1881,6 +1882,26 @@ header .notification .circle
   box-shadow: 0 0 0 0.2rem rgba(26,80,137,0.25);
 }
 
+.v-align
+{
+  width: 100px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 61.2px;
+}
+
+.c-div
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#date
+{
+  cursor: pointer;
+}
+
 
 /*.btn-admin{
   background-color: #dc3545!important;
@@ -1898,7 +1919,10 @@ header .notification .circle
   outline: none;*/
 }
 /*date ranger picker=========================================*/
-
+.daterangepicker td.active, 
+.daterangepicker td.active:hover {
+    background-color: #dc3545!important;}
+    
 .daterangepicker td.active, 
 .daterangepicker td.active:hover,
 .daterangepicker td.end-date {
@@ -1923,6 +1947,8 @@ header .notification .circle
  background-color: #ed254e!important;
  border: none!important;
 }
+
+
 /*collapse========================================================*/
 
 .content-collapse {

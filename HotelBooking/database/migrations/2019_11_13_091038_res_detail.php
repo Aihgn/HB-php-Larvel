@@ -15,6 +15,7 @@ class ResDetail extends Migration
     {
         Schema::create('res_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('reservation_id');
             $table->integer('room_type_id');
             $table->integer('quantity');   
             $table->datetime('checkin_date');

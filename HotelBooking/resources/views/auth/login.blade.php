@@ -5,11 +5,11 @@
         <div class="form-center-section">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-12 col-xl-6 col-lg-8 col-md-10">                            
+                    <div class="col-12 col-xl-6 col-lg-8 col-md-10">
                         <div class="input-form">
                             <h1 class="text-center mb-4">Login</h1>
                             @if(Session::has('failed'))
-                                <div class="alert-error text-center mt-4" id="login_failed">{{Session::get('failed')}}</div>
+                                <div class="alert-error text-center p-2 mt-4" id="login_failed">{{Session::get('failed')}}</div>
                             @endif
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf

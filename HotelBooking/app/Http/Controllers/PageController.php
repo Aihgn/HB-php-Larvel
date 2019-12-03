@@ -44,19 +44,15 @@ class PageController extends Controller
         return view('page.my_account', compact('acc_info','booking_info'));        
     }
 
-    public function postMyAccount(Request $req)
+    public function changeAccInfo(Request $req)
     {          
         $id_user = Auth::id();
         $user=User::findOrFail($id_user);
         if(Hash::check($req->password, $user->password)){
             User::where('id',$id_user)->update(array(
                         'name'=>$req->name,
-            ));
-            Customer::where('id_user',$id_user)->update(array(
-                        'name'=>$req->name,
                         'phone_number'=>$req->phone_number,
                         'address'=>$req->address,
-
             ));
             return response()->json([
                 'status' => 'success',
@@ -118,12 +114,11 @@ class PageController extends Controller
 
     public function cancelReservation($id)
     {
-        $id_c = Auth::user()->id;
-        Reservation::where('id',$id)->where('id_customer',$id_c)->update(array(
+        $uid = Auth::user()->id;
+        Reservation::where('id',$id)->where('user_id',$uid)->update(array(
                         'status'=>2,
             ));
         return redirect()->back();
-        
     }
 
     public function getBooking()
@@ -147,26 +142,23 @@ class PageController extends Controller
         
         $reservation = new Reservation();        
         if (Auth::check()){
-            $reservation->id_customer= Auth::user()->id;
-        }else{
-            $customer = new Customer();
-            $customer->name = $req->name;
-            $customer->email = $req->email;
-            $customer->phone_number = $req->phone_number;
-            $customer->save();
-            $reservation->id_customer = $customer->id;
+            $reservation->user_id= Auth::user()->id;
         }
-        $reservation->total=$req->total_amount;            
-        $reservation->date_in = date('Y-m-d', strtotime($req->start));
-        $reservation->date_out = date('Y-m-d', strtotime($req->end));
+        $reservation->name = $req->name;
+        $reservation->email = $req->email;
+        $reservation->phone_number = $req->phone_number;
+
         $reservation->save();
-        for($i = 1; $i <= $qty; $i++)
-        {
-            $temp_str ='';
-            $temp_str .='type_room_'.$i.'';
-            // dd($req->$temp_str);
-            $AdminController->genRoom($req->$temp_str, date('Y-m-d', strtotime($req->start)),$reservation->id);
-        }
+                   
+        // $reservation->date_in = date('Y-m-d', strtotime($req->start));
+        // $reservation->date_out = date('Y-m-d', strtotime($req->end));
+        // $reservation->save();
+        // for($i = 1; $i <= $qty; $i++)
+        // {
+        //     $temp_str ='';
+        //     $temp_str .='type_room_'.$i.'';
+        //     $AdminController->genRoom($req->$temp_str, date('Y-m-d', strtotime($req->start)),$reservation->id);
+        // }
         return redirect('/');
     }
     

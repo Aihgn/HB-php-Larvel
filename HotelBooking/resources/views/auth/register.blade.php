@@ -15,35 +15,31 @@
                             @csrf
 
                             <div class="input-field"> 
-                                <label for="name">{{ __('Name') }}</label>
-                                <input id="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} color-white" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <div class="alert-error text-center mt-4">
-                                        <strong>*{{ $errors->first('name') }}</strong>
-                                    </div>
-                                @endif                               
+                                <label for="name">Name</label>
+                                <input id="name" type="text" class="color-white" name="name" value="{{ old('name') }}" required autofocus>
                             </div>
 
                             <div class="input-field">
-                                <label for="email">{{ __('Email') }}</label>
+                                <label for="email">Email</label>
                                 <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} color-white" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
-                                    <div class="alert-error text-center mt-4">
+                                    <div class="alert-error text-center mt-3">
                                         <strong>*{{ $errors->first('email') }}</strong>
                                     </div>
                                 @endif
                             </div>
 
                             <div class="input-field">
-                                <label for="password" >{{ __('Password') }}</label>
+                                <label for="password" >Password</label>
                                 <input id="password" type="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }} color-white" name="password" required>
 
-                                @if ($errors->has('password'))
-                                    <div class="alert-error text-center mt-4">
-                                        <strong>*{{ $errors->first('password') }}</strong>
-                                    </div>
+                                @if (!$errors->has('email'))
+                                    @if ($errors->has('password'))
+                                        <div class="alert-error text-center mt-3">
+                                            <strong>*{{ $errors->first('password') }}</strong>
+                                        </div>
+                                    @endif
                                 @endif                              
                             </div>
 
@@ -52,7 +48,7 @@
                                 <input id="password-confirm" type="password"  name="password_confirmation" class="color-white" required>
                             </div>
 
-                            <div class="button-div text-center col-12">                                
+                            <div class="button-div text-center col-12">
                                 <button type="submit" class="input-button pt-2 pb-2">
                                     {{ __('Register') }}
                                 </button>                                

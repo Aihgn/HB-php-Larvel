@@ -104,7 +104,7 @@
 		
 		.price-sel{
 			display: flex;
-			position: absolute;
+			/*position: absolute;*/
 			bottom: 0;
 			width: 80%;
     		right: 0;
@@ -325,16 +325,11 @@
                             </div>
                             @else
 	                            <div class="input-field"> 
-	                                <label for="name">{{ __('Full name:')}}</label>
-	                                <input id="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} color-white" value="{{ Auth::user()->name }}" required>
-	                                @if ($errors->has('name'))
-	                                    <div class="alert-error text-center mt-4">
-	                                        <strong>*{{ $errors->first('name') }}</strong>
-	                                    </div>
-                               		 @endif 
+	                                <label for="name">Full name:</label>
+	                                <input id="name" type="text" class="color-white" value="{{ Auth::user()->name }}" name="name" required>
 	                            </div>
 	                            <div class="input-field">
-	                                <label for="email">{{__('Email:')}}</label>
+	                                <label for="email">Email:</label>
 	                                <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} color-white" name="email" value="{{ Auth::user()->email }}" required>
 
 	                                @if ($errors->has('email'))
@@ -344,8 +339,8 @@
 	                                @endif
 	                            </div>
 	                            <div class="input-field">
-	                            	<label for="phone_number">{{ __('Phone number:')}}</label>
-	                                <input id="phone_number" type="text" class="color-white" value="{{$acc_info[0]->phone_number}}" required>   
+	                            	<label for="phone_number">Phone number:</label>
+	                                <input id="phone_number" type="text" class="color-white" name="phone_number" value="{{$acc_info[0]->phone_number}}" required>   
 	                            </div>
                             @endguest     
                             <div class="button-div text-center col-12">                                

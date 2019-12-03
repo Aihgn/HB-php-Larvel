@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\User;
 use App\Reservation;
+use App\ResDetail;
 
 class AdminController extends Controller
 {
@@ -21,44 +22,45 @@ class AdminController extends Controller
     }
 
     public function getAdmin(Request $req)
-    {
-        // $req->user()->authorizeRoles(['receptionist', 'admin']);        
+    {       
         return view('page.admin.index_admin');
     }    
 
     public function getBookOff()
     {
         $room_type = DB::table('room_types')->get();
-        return view('page.admin.booking', compact('room_type'));
+        $count = DB::table('room_types')->count();
+        return view('page.admin.booking', compact('room_type', 'count'));
     }
 
     public function postBookOff(Request $req)
     {
-        $qty= $req->qty_room;
         $startDate = substr($req->datefilter, 0, -13);
         $endDate = substr($req->datefilter,13);
-        
-        $customer = new Customer();
-        $customer->name = $req->name;
-        $customer->email = $req->email;
-        $customer->phone_number = $req->phone_number;
-        $customer->save();
-
-        $reservation = new Reservation(); 
-        $reservation->id_customer = $customer->id;        
-        $reservation->total=$req->total;            
-        $reservation->date_in = date('Y-m-d', strtotime($startDate));
-        $reservation->date_out = date('Y-m-d', strtotime($endDate));
+        $reservation = new Reservation();
+        $reservation->name = $req->name;
+        $reservation->email = $req->email;
+        $reservation->phone_number = $req->phone_number;
         $reservation->save();
 
-        for($i = 0; $i < $qty; $i++)
+        $count = DB::table('room_types')->count();
+       
+        for($i = 0; $i < $count; $i++)
         {
             $temp_str ='';
             $temp_str .='sel_'.$i.'';
-            $this->genRoom($req->$temp_str,$startDate,$reservation->id);
+            if($req->$temp_str > 0)
+            {
+                $res_detail = new ResDetail();
+                $res_detail->reservation_id = $reservation->id;
+                $res_detail->room_type_id = $i;
+                $res_detail->quantity = $req->$temp_str;
+                $res_detail->checkin_date = date('Y-m-d', strtotime($startDate));
+                $res_detail->checkout_date = date('Y-m-d', strtotime($endDate));
+                $res_detail->save();
+            }
         }
-
-        return redirect()->back()->with('success', 'Book room success!');  
+        return redirect()->back();  
     }
 
     public function getCheckin(Request $req)
@@ -91,34 +93,30 @@ class AdminController extends Controller
 
     public function getManagerAcc(Request $req)
     {
-        // $req->user()->authorizeRoles('admin');
         $acc = DB::table('groups')        
         ->join('users','users.group_id','=','groups.id')
         ->where('groups.id', '=',1)
         ->orWhere('groups.id', '=',2)
-        ->get();   
-
-        // dd($acc);
+        ->get();
         return view('page.admin.manager_account',compact('acc'));
     }
 
     public function getManagerRoom(Request $req)
-    {
-        // $req->user()->authorizeRoles(['admin']);        
+    {      
         $room_type = DB::table('room_types')->get();
         return view('page.admin.manager_room',compact('room_type'));
     }
 
     public function genRoom($id_type,$exp_date,$id_res){
-        $room = DB::table('room')
-                ->where('id_type', '=', $id_type)
-                ->where('status','=',0)
-                ->first();
+        // $room = DB::table('rooms')
+        //         ->where('id_type', '=', $id_type)
+        //         ->where('status','=',0)
+        //         ->first();
         $exp = date('Y-m-d',strtotime(' + 1 day', strtotime($exp_date)));
-        DB::table('room')
-            ->where('id', $room->id)
-            ->update(['status' => 2,
-                    'expiry_date' => $exp]);
+        // DB::table('rooms')
+        //     ->where('id', $room->id)
+        //     ->update(['status' => 2,
+        //             'expiry_date' => $exp]);
         DB::table('reservation_detail')
             ->insertGetId(['id_reservation' => $id_res,
                          'id_room' => $room->id]);

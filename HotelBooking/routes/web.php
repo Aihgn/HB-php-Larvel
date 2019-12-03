@@ -18,7 +18,7 @@ Auth::routes();
 //user--------------------------------------------------------------
 Route::get('myaccount', 'PageController@getMyAccount')->name('myaccount')->middleware('auth');
 
-Route::post('myaccount', 'PageController@postMyAccount')->name('myaccount');
+Route::post('myaccount', 'PageController@changeAccInfo')->name('myaccount');
 
 Route::post('myaccount/change-password', 'PageController@changePassword')->name('change-password')->middleware('auth');
 
@@ -61,7 +61,7 @@ Route::middleware('manager')->group(function () {
 
 		Route::post('book-off', 'AdminController@postBookOff')->name('book_off');
 
-		Route::get('book-off/get-price', 'AjaxController@getPrice')->name('get_price');
+		Route::get('book-off/get-total', 'AjaxController@getTotal')->name('get_total');
 
 
 		//manger account-----------------------------------------------------
@@ -87,7 +87,10 @@ Route::middleware('manager')->group(function () {
 
 		Route::post('manager-room/del-room-type', 'AjaxController@delRoomType')->name('del_room_type');
 
-		Route::get('pick-date-res', 'AjaxController@getResInfo')->name('res.pick-date');//???????
+
+		// ============================
+
+		Route::get('pick-date-res', 'AjaxController@getResInfo')->name('res.pick-date');
 		});
 
 });

@@ -8,7 +8,7 @@
                   <li class="active"><a class="pill" href="#profile" data-toggle="pill">Profile</a></li>
                   <li><a  class="pill" href="#change_password" data-toggle="pill">Change Password</a></li>
                   <li><a class="pill" href="#my_booking" data-toggle="pill">My Bookings</a></li>	                  
-                </ul>           
+                </ul>
 	            <div class="col-7 mt-5 background-white">
 	                
 	                <div class="tab-content pr-5">	                	
@@ -100,7 +100,7 @@
 		                        			<td>{{date('d-m-Y', strtotime($b_i->date_in))}}</td>
 		                        			<td>{{date('d-m-Y', strtotime($b_i->date_out))}}</td>
 		                        			
-	                        				@if($b_i->status == 0)
+	                        				@if($b_i->status == 1)
 	                        					<td><span class="stt-p p-2">Pending</span></td>
 	                        					<td class="p-1"><a onclick="return confirm('Are you sure?')" href="{{route('cancel-res',$b_i->id)}}" class="btn btn-danger pb-2 pt-2 pl-1 pr-1 cancel-res">Cancel</a></td>
 	                        				@elseif($b_i->status ==2)
