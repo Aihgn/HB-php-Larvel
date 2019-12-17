@@ -23,15 +23,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/color/color.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/owl.carousel.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/owl.transitions.css') }}" rel="stylesheet">
-
     <!-- Ioncion -->
     <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-
-    <!-- Fontawsome -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- Boostrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -193,7 +186,7 @@
 
 	
 	<div class="lds-ring" id="lds-ring"><div></div><div></div><div></div><div></div></div>
-	<div class="fluid-container">
+	<div class="container-fluid">
 		
 		<div class="nav nav-tabs border-bottom-0" id="tabMenu">
 			<a class="HearderButton col-3 justify-content-center" href="{{route('home')}}" target="_blank" >Home</a>			
@@ -349,7 +342,6 @@
 	                            </button>                                
 	                        </div>                       	
 						</div>
-						
 					</div>
 				</div>
 			</div>

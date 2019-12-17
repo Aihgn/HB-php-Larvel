@@ -102,10 +102,17 @@
 				var qty = [];
 				var ranger = calDate();
 				var count = $("#qty_room").val();
-				for ($i = 0; $i<count; $i++)
+				for ($i = 0; $i<count+2; $i++)
 				{
-					var string = "#"+($i+1);
-					qty[$i]=$(string).val();
+					var string = "#"+($i+1);					
+					if($(string).val()== null)
+					{
+						qty[$i]=0;
+					}
+					else
+					{
+						qty[$i]=$(string).val();
+					}
 				}
 					$.ajax(
 					{

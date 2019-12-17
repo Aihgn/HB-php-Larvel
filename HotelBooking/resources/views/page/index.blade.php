@@ -9,7 +9,7 @@
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-10 col-sm-8 parallax-fade-top">
-						<div class="hero-text">Wellcome to x-hotel</div>
+						<div class="hero-text">Wellcome to Paradise Hotel</div>
 					</div>
 					<div class="col-12 mt-3 mb-5 parallax-fade-top">
 						<div class="hero-stars">
@@ -68,7 +68,7 @@
 									</div>
 								</div>
 								<div class="col-6  col-sm-4 col-lg-2">
-									<a class="bttn btn-invert" href="search.html">check availability</a>
+									<a class="bttn btn-invert" href="#">check availability</a>
 								</div>
 							</div>
 						</div>
@@ -125,7 +125,7 @@
 						<div class="card-body">
 							<h5 class="card-title">{{$r->name}}</h5>
 							<p class="card-text">{{$r->description}}</p>
-							<a href="{{route('booking')}}" class="col-4 bttn btn-primary">book now</a>
+							<a href="{{route('res')}}" class="col-4 bttn btn-primary">book now</a>
 						</div>
 					</div>
 				</div>
@@ -138,7 +138,7 @@
 	<!-- Quote 
 		======================================================== -->
 	<div class="section padding-top-bottom-big over-hide">
-		<div class="parallax" style="background-image: url('img/5.jpg')"></div>	
+		<div class="parallax" style="background-image: url('img/quote.jpg')"></div>	
 		<div class="section z-bigger">		
 			<div class="container">
 				<div class="row justify-content-center">

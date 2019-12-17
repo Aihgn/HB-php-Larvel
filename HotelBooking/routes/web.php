@@ -9,6 +9,10 @@ Route::get('rooms', 'PageController@getRooms')->name('rooms');
 
 Route::get('about', 'PageController@getAbout')->name('about');
 
+Route::get('reservations', 'PageController@getRes')->name('res');
+
+Route::get('reservations/get-total', 'AjaxController@getTotal')->name('r_get_total');
+
 Route::get('search-res', 'PageController@getSearchRes')->name('search_res');
 
 Auth::routes();
@@ -24,13 +28,9 @@ Route::post('myaccount/change-password', 'PageController@changePassword')->name(
 
 Route::get('myaccount/cancel-reservation/{id}', 'PageController@cancelReservation')->name('cancel-res')->middleware('auth');
 
-Route::get('booking', 'PageController@getBooking')->name('booking');
+// Route::get('booking', 'PageController@getBooking')->name('booking');
 
-Route::post('booking', 'PageController@postBooking')->name('booking');
-
-Route::get('/booking/add_room', 'AjaxController@addRoom')->name('add_room.action');
-
-Route::get('/booking/remove_room', 'AjaxController@removeRoom')->name('remove_room.action');
+// Route::post('booking', 'PageController@postBooking')->name('booking');
 
 
 
@@ -91,6 +91,6 @@ Route::middleware('manager')->group(function () {
 		// ============================
 
 		Route::get('pick-date-res', 'AjaxController@getResInfo')->name('res.pick-date');
-		});
+	});
 
 });

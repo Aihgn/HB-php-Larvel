@@ -16,7 +16,7 @@ include ("AdminController.php");
 
 class PageController extends Controller
 {    
-    //page
+//page
     public function getIndex(){
         $room = RoomType::all();
         return view('page.index', compact('room'));
@@ -35,7 +35,7 @@ class PageController extends Controller
         return view('page.search_reservation');
     }
 
-    //user
+//user
     public function getMyAccount()
     {       
         $id = Auth::user()->id;
@@ -124,15 +124,14 @@ class PageController extends Controller
     public function getBooking()
     {
         $room = RoomType::all();
+        $count = DB::table('room_types')->count();
         if (Auth::check())
         {
             $id = Auth::user()->id;
             $acc_info = User::where('id',$id)->get();            
-            return view('page.booking', compact('room','acc_info'));
-        } else{
-            return view('page.booking', compact('room'));
+            return view('page.booking', compact('room','acc_info','count'));
         }
-        return view('page.booking', compact('room'));
+        return view('page.booking', compact('room','count'));
     }
 
     public function postBooking(Request $req)
@@ -162,4 +161,11 @@ class PageController extends Controller
         return redirect('/');
     }
     
+
+    public function getRes(Request $req)
+    {
+        $room = RoomType::all();
+        $count = DB::table('room_types')->count();
+        return view('page.reservation',compact('room','count'));
+    }
 }

@@ -27,7 +27,7 @@
 						<div class="card-body">
 							<h5 class="card-title">{{$r->name}}</h5>
 							<p class="card-text">{{$r->description}}</p>
-							<a href="#" class="col-4 bttn btn-primary">book now</a>
+							<a href="{{route('res')}}" class="col-4 bttn btn-primary">book now</a>
 						</div>
 					</div>
 				</div>

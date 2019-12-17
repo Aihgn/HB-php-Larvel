@@ -48,7 +48,7 @@
 				<li><a href="">Service</a></li>
 				<li><a href="">contact</a></li>
 				<li><a href="{{route('about')}}">about us</a></li>
-				<li><a href="{{route('booking')}}"><span>book now</span></a></li>
+				<li><a href="{{route('res')}}"><span>reservations</span></a></li>
 			</ul>
 		</div>
 	</nav>
