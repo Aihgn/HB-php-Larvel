@@ -2,17 +2,17 @@
 @section('content')
 
     <div class="card mt-3 p-2">       
-        <h5 class="m-2 ">Pick date check-out</h5> 
+        <h2 class="m-2 ">Pick date</h2> 
         <div class="col-3 m-3 ">
             <div class="row mb-4 input-field">
             <input type="text" id="date" name="date_pick" id="date"  value="" placeholder="" />
             </div>                          
         </div>
-        <div class="input-field mt-3 mb-2 col-5"> 
+        {{-- <div class="input-field mt-3 mb-2 col-5"> 
             <label for="search">{{ __('Search') }}</label>
             <input id="search" type="text" placeholder="" required autofocus>
-        </div>
-        <h5>List reservation</h5>
+        </div> --}}
+        <h2>List Reservations</h2>
     	<table class="table table-hover">
         	<thead>
         		<tr>
@@ -34,7 +34,7 @@
         $(document).ready(function(){
             function fetch_res_out(){  
                 var date = $("#date").val();
-                var stt=1;
+                var stt=0;
                 $.ajax({
                     url:"{{route('res.pick-date')}}",
                     method:'GET',

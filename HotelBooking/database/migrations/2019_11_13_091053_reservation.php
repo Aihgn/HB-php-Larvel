@@ -20,6 +20,8 @@ class Reservation extends Migration
             $table->string('phone_number');
             $table->string('email');      
             $table->tinyInteger('status')->default('1');
+            $table->date('checkin_date');
+            $table->date('checkout_date'); 
             $table->timestamps();
         });
     }

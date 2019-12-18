@@ -18,8 +18,8 @@ class ResDetail extends Migration
             $table->integer('reservation_id');
             $table->integer('room_type_id');
             $table->integer('quantity');   
-            $table->datetime('checkin_date');
-            $table->datetime('checkout_date');             
+            // $table->date('checkin_date');
+            // $table->date('checkout_date');             
             $table->timestamps();
         });
     }

@@ -12,67 +12,6 @@ use App\User;
 
 class AjaxController extends Controller
 {
-    //user----------------------------------------------
-    public function addRoom(Request $req)
-    {        
-        if($req->ajax())
-        {   
-            $output1='';
-            $output2='';
-            $id = $req->get('id');
-            $roomID = $req->get('roomIDp');
-            $calDate = $req->get('calDate');
-            $room = RoomType::find($id);         
-            
-            $output1 .='
-                <div class="card m-2 p-0">                             
-                    <div class="card-horizontal">
-                        <div class="img-square-wrapper">
-                            <img class="room-img-cart" src="img/'.$room->image.'" alt="Card image cap">
-                        </div>
-                        <div class="card-body p-0">                                 
-                            <span class="col-6 pt-4">'.$room->name.'</span>
-                            
-                            <a href="#" class="remove-room col-4 pt-3 ml-5 " id="roomid'.$roomID.''.$id.'"><ion-icon name="close" style="font-size: 40px; color:#000;"></ion-icon></a>                
-                        </div>
-                    </div>      
-                </div>
-            ';
-            $output2 .='
-                <div class="row roomid'.$roomID.''.$id.'" id="roomid'.$roomID.''.$id.'">
-                    <div class="col-4">'.$room->name.'</div>
-                    <div class="col-4"> x '.$calDate.' night</div>
-                    <div class="col-4">$'.$room->price*$calDate.'</div>
-                    <input type="hidden" name="type_room_'.$roomID.'" id="type_room" value="'.$id.'" />                    
-                </div>
-            ';
-            $room_price=$room->price*$calDate;
-            $data = array(
-                "room" => $output1,
-                "detail" =>$output2,    
-                "room_price"=>$room_price,
-            );
-            echo json_encode($data);
-        }
-    }
-
-    public function removeRoom(Request $req)
-    {        
-        if($req->ajax())
-        {   
-            $id = $req->get('id');            
-            $calDate = $req->get('calDate');
-            $room = RoomType::find($id);           
-            $roomPrice=$room->price*$calDate;
-            $data = array(                 
-                "room_price"=>$roomPrice,
-            );
-            echo json_encode($data);
-        }
-    }
-
-    //admin---------------------------------------------
-
 
 
 //book off
@@ -95,13 +34,56 @@ class AjaxController extends Controller
         }
     }
 
+    public function getResByStt(Request $req)
+    {        
+        if($req->ajax())
+        {  
+            $res = DB::table('reservations')
+                ->where('status', '=', $req->stt)
+                ->get();
+            $output='';
+            foreach($res as $i=>$row)
+            {
+                $output .= '
+                <tr>
+                    <td>'.($i+1).'</td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->phone_number.'</td>
+                    <td>'.$row->email.'</td>
+                    <td>'.$row->checkin_date.'</td>
+                    <td>'.$row->checkout_date.'</td>
+                ';
+                if($row->status == 0)//Done
+                {
+                        $output .= '<td><span class="stt-d p-2">Confirm</span></td></tr>';
+                }
+                else if($row->status == 1)//Pending
+                {
+                    $output .= '<td><span class="stt-p p-2">Pending</span></td>
+                                    <td class="p-1"><button class="btn-confirm btn btn-success" id="'.$row->id.'">Confirm</button></td>
+                                    <td class="p-1"><button class="btn-cancel btn btn-danger"  id="'.$row->id.'">Cancel</button></td>
+                                </tr>';
+                }
+                else if($row->status == 2)
+                {
+                     $output .= '<td><span class="stt-c p-2">Cancel</span></td></tr>';
+                }
+                else
+                {
+                    $output .= '<td><span class="stt-d p-2">Done</span></td></tr>';
+                }
+            }
+            echo json_encode($output);
+        }
+    }
+
     public function getResInfo(Request $req)
     {        
         if($req->ajax())
         {   
-            $date = date('Y-m-d', strtotime($req->get('date')));
-            $stt =(int)($req->get('stt'));
-            if($stt == 0 )
+            $date = date('Y-m-d', strtotime($req->date));
+            $stt =(int)($req->stt);
+            if($stt == 1 )
             {
                 $res = DB::table('customer')
                 ->join('reservation','customer.id','reservation.id_customer')
@@ -109,20 +91,16 @@ class AjaxController extends Controller
                 ->where('status', '=', $stt)
                 ->get();              
             }
-            else if($stt == 1)
+            else if($stt == 0)
             {
-                $res = DB::table('customer')
-                ->join('reservation','customer.id','reservation.id_customer')
-                ->where('reservation.date_out', '=', $date)
+                $res = DB::table('reservations')
                 ->where('status', '=', $stt)
                 ->get();                  
             }
             else
             {
-               $res = DB::table('customer')
-                ->join('reservation','customer.id','reservation.id_customer')
-                ->where('reservation.date_in', '=', $date)
-                ->orWhere('reservation.date_out', '=', $date)
+               $res = DB::table('reservations')
+                // ->where('checkin_date', '=', $date)
                 ->get(); 
             }       
             $output='';   
@@ -134,30 +112,31 @@ class AjaxController extends Controller
                     <td>'.$row->name.'</td>
                     <td>'.$row->phone_number.'</td>
                     <td>'.$row->email.'</td>
-                    <td>'.$row->date_in.'</td>
-                    <td>'.$row->date_in.'</td>
+                    <td>'.$row->checkin_date.'</td>
+                    <td>'.$row->checkout_date.'</td>
                 ';
-                if($row->status == 0)
+                if($row->status == 0)//Done
                 {
                     if($stt == 2)
                     {
-                        $output .= '<td><span class="stt-p p-2">Pending</span></td></tr>';
+                        $output .= '<td><span class="stt-d p-2">Confirm</span></td></tr>';
                     }
                     else
                     {
                         $output .= '                       
-                            <td><span class="stt-p p-2">Pending</span></td>
-                            <td class="p-1"><button class="btn-check-in btn btn-success" id="'.$row->id.'">Check-in</button></td>
-                            <td class="p-1"><button class="btn-cancel btn btn-danger"  id="'.$row->id.'">Cancel</button></td>
+                            <td><span class="stt-d p-2">Confirm</span></td>
+                            <td class="p-1"><button class="btn-check-out btn btn-danger" id="'.$row->id.'">Check-out</button></td>
                         </tr>';
-                    }
-                    
+                    }                    
                 }
-                else if($row->status == 1)
+                else if($row->status == 1)//Pending
                 {
                      if($stt == 2)
                     {
-                        $output .= '<td><span class="stt-p p-2">Pending</span></td></tr>';
+                        $output .= '<td><span class="stt-p p-2">Pending</span></td>
+                                    <td class="p-1"><button class="btn-confirm btn btn-success" id="'.$row->id.'">Confirm</button></td>
+                                    <td class="p-1"><button class="btn-cancel btn btn-danger"  id="'.$row->id.'">Cancel</button></td>
+                                </tr>';
                     }
                     else
                     {
@@ -169,12 +148,12 @@ class AjaxController extends Controller
                 }
                 else if($row->status == 2)
                 {
-                    $output .= '<td><span class="stt-d p-2">Done</span></td></tr>';
+                     $output .= '<td><span class="stt-c p-2">Cancel</span></td></tr>';
                 }
                 else
                 {
-                     $output .= '<td><span class="stt-c p-2">Cancel</span></td></tr>';
-                }                       
+                    $output .= '<td><span class="stt-d p-2">Done</span></td></tr>';
+                }                      
            } 
             echo json_encode($output);
         }
@@ -196,17 +175,19 @@ class AjaxController extends Controller
         if($req->ajax())
         {
             $id = $req->get('id');
-            DB::table('reservation')
+            DB::table('reservations')
                 ->where('id', $id)
-                ->update(['status' => 2]);   
-                
-            DB::table('reservation')
-                ->join('reservation_detail', 'reservation_detail.id_reservation', 'reservation.id')
-                ->join('room','room.id','reservation_detail.id_room')
-                ->where('reservation.id','=', 3)
-                // ->where('reservation.date_out', '=')
-                ->update(['room.status'=>0,
-                            'room.expiry'=>NULL]);
+                ->update(['status' => 3]);
+            $res = DB::table('reservations')
+                ->join('res_details','reservations.id','res_details.reservation_id')
+                ->where('reservations.id', '=', $id)
+                ->get();
+            foreach ($res as $i => $r) 
+            {
+                DB::table('room_types')
+                ->where('id', $r->room_type_id)
+                ->increment('available', $r->quantity);
+            }
         }
     }
 
@@ -215,9 +196,31 @@ class AjaxController extends Controller
         if($req->ajax())
         {
             $id = $req->get('id');
-            DB::table('reservation')
+            DB::table('reservations')
                 ->where('id', $id)
-                ->update(['status' => 3]);   
+                ->update(['status' => 2]);   
+        }
+    }
+
+
+    public function confirmRes(Request $req)
+    {
+        if($req->ajax())
+        {
+            $id = $req->get('id');
+            DB::table('reservations')
+                ->where('id', $id)
+                ->update(['status' => 0]);
+            $res = DB::table('reservations')
+                ->join('res_details','reservations.id','res_details.reservation_id')
+                ->where('reservations.id', '=', $id)
+                ->get();
+            foreach ($res as $i => $r) 
+            {
+                DB::table('room_types')
+                ->where('id', $r->room_type_id)
+                ->decrement('available', $r->quantity);
+            }
         }
     }
 

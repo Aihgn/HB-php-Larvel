@@ -68,7 +68,7 @@
 									</div>
 								</div>
 								<div class="col-6  col-sm-4 col-lg-2">
-									<a class="bttn btn-invert" href="#">check availability</a>
+									<a class="bttn btn-invert" target="_blank" rel="noopener noreferrer" href="{{route('res')}}">check availability</a>
 								</div>
 							</div>
 						</div>
@@ -125,7 +125,7 @@
 						<div class="card-body">
 							<h5 class="card-title">{{$r->name}}</h5>
 							<p class="card-text">{{$r->description}}</p>
-							<a href="{{route('res')}}" class="col-4 bttn btn-primary">book now</a>
+							<a target="_blank" rel="noopener noreferrer" href="{{route('res')}}" class="col-4 bttn btn-primary">book now</a>
 						</div>
 					</div>
 				</div>

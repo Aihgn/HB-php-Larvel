@@ -97,8 +97,8 @@
 	                        		@foreach($booking_info as $i=>$b_i)
 	                        		<tr>
 	                        			<td>{{$i+1}}</td>	
-	                        			<td>{{date('d-m-Y', strtotime($b_i->date_in))}}</td>
-	                        			<td>{{date('d-m-Y', strtotime($b_i->date_out))}}</td>
+	                        			<td>{{date('d-m-Y', strtotime($b_i->checkin_date))}}</td>
+	                        			<td>{{date('d-m-Y', strtotime($b_i->checkout_date))}}</td>
 	                        			
                         				@if($b_i->status == 1)
                         					<td><span class="stt-p p-2">Pending</span></td>

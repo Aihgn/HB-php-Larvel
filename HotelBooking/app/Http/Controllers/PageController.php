@@ -12,6 +12,8 @@ use Auth;
 use App\RoomType;
 use App\Reservation;
 use App\User;
+use App\ResDetail;
+use DateTime;
 include ("AdminController.php");
 
 class PageController extends Controller
@@ -40,7 +42,10 @@ class PageController extends Controller
     {       
         $id = Auth::user()->id;
         $acc_info = User::where('id',$id)->get();   
-        $booking_info = Reservation::where('user_id',$id)->get();
+        $booking_info = DB::table('reservations')
+            ->where('user_id', '=', $id)
+            ->get();
+            // dd($booking_info);
         return view('page.my_account', compact('acc_info','booking_info'));        
     }
 
@@ -121,7 +126,48 @@ class PageController extends Controller
         return redirect()->back();
     }
 
-    public function getBooking()
+    // public function getBooking()
+    // {
+    //     $room = RoomType::all();
+    //     $count = DB::table('room_types')->count();
+    //     if (Auth::check())
+    //     {
+    //         $id = Auth::user()->id;
+    //         $acc_info = User::where('id',$id)->get();            
+    //         return view('page.booking', compact('room','acc_info','count'));
+    //     }
+    //     return view('page.booking', compact('room','count'));
+    // }
+
+    // public function postBooking(Request $req)
+    // {
+    //     $qty = $req->qty_r;
+    //     $AdminController = new AdminController();
+        
+    //     $reservation = new Reservation();        
+    //     if (Auth::check()){
+    //         $reservation->user_id= Auth::user()->id;
+    //     }
+    //     $reservation->name = $req->name;
+    //     $reservation->email = $req->email;
+    //     $reservation->phone_number = $req->phone_number;
+
+    //     $reservation->save();
+                   
+    //     // $reservation->date_in = date('Y-m-d', strtotime($req->start));
+    //     // $reservation->date_out = date('Y-m-d', strtotime($req->end));
+    //     // $reservation->save();
+    //     // for($i = 1; $i <= $qty; $i++)
+    //     // {
+    //     //     $temp_str ='';
+    //     //     $temp_str .='type_room_'.$i.'';
+    //     //     $AdminController->genRoom($req->$temp_str, date('Y-m-d', strtotime($req->start)),$reservation->id);
+    //     // }
+    //     return redirect('/');
+    // }
+    
+
+    public function getRes(Request $req)
     {
         $room = RoomType::all();
         $count = DB::table('room_types')->count();
@@ -129,43 +175,47 @@ class PageController extends Controller
         {
             $id = Auth::user()->id;
             $acc_info = User::where('id',$id)->get();            
-            return view('page.booking', compact('room','acc_info','count'));
+            return view('page.reservation', compact('room','acc_info','count'));
         }
-        return view('page.booking', compact('room','count'));
+        return view('page.reservation',compact('room','count'));
     }
 
-    public function postBooking(Request $req)
+    public function postRes(Request $req)
     {
-        $qty = $req->qty_r;
-        $AdminController = new AdminController();
-        
-        $reservation = new Reservation();        
-        if (Auth::check()){
+        $sDate = DateTime::createFromFormat('d.m.Y', $req->start)->format('Y-m-d');
+        $eDate = DateTime::createFromFormat('d.m.Y', $req->end)->format('Y-m-d');
+
+        $reservation = new Reservation();
+        if (Auth::check())
+        {
             $reservation->user_id= Auth::user()->id;
         }
         $reservation->name = $req->name;
         $reservation->email = $req->email;
         $reservation->phone_number = $req->phone_number;
-
+        $reservation->checkin_date = $sDate;
+        $reservation->checkout_date = $eDate;
         $reservation->save();
-                   
-        // $reservation->date_in = date('Y-m-d', strtotime($req->start));
-        // $reservation->date_out = date('Y-m-d', strtotime($req->end));
-        // $reservation->save();
-        // for($i = 1; $i <= $qty; $i++)
-        // {
-        //     $temp_str ='';
-        //     $temp_str .='type_room_'.$i.'';
-        //     $AdminController->genRoom($req->$temp_str, date('Y-m-d', strtotime($req->start)),$reservation->id);
-        // }
-        return redirect('/');
-    }
-    
 
-    public function getRes(Request $req)
-    {
-        $room = RoomType::all();
+        
+
         $count = DB::table('room_types')->count();
-        return view('page.reservation',compact('room','count'));
+       
+        for($i = 0; $i < $count; $i++)
+        {
+            $temp_str ='';
+            $temp_str .='sel_'.($i+1).'';
+            if($req->$temp_str > 0)
+            {
+                $res_detail = new ResDetail();
+                $res_detail->reservation_id = $reservation->id;
+                $res_detail->room_type_id = ($i+1);
+                $res_detail->quantity = $req->$temp_str;
+                // $res_detail->checkin_date = $sDate;
+                // $res_detail->checkout_date = $eDate;
+                $res_detail->save();
+            }
+        }
+        return redirect("/");
     }
 }

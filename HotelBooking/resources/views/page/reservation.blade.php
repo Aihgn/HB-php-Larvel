@@ -18,6 +18,8 @@
 <body>
 
 	<div class="lds-ring" id="lds-ring"><div></div><div></div><div></div><div></div></div>
+	<form method="POST" action="{{ route('res') }}">
+			@csrf
 	<div class="container">
 		<div id="date-pick" class="tab-pane active">
 			<h4 class="text-center mt-1 color-white">Date picker</h4>
@@ -51,30 +53,27 @@
 		</div>
 	
 		<div class="container">
-			<form method="POST" action="{{ route('res') }}">
-			@csrf
-				<div class="page-bar" id="tabMenu">
-				    <ul class="page-breadcrumb row">
-				        <li class="col-6 active first" id="1st">
-				            <span>
-				                <span class="numberCircle checkLabel bg-green-jungle">
-				                    <i class="fa fa-check"></i>
-				                </span>
-				                <span class="numberCircle numberLabel">1</span>
-				                <b>Choose a room</b>
-				            </span>
-				        </li>
-				        <li class="col-6 second" id="2nd">
-				            <span>
-				                <span class="numberCircle checkLabel bg-green-jungle">
-				                    <i class="fa fa-check"></i>
-				                </span>
-				                <span class="numberCircle numberLabel">2</span>
-				                <b>Information</b>
-				            </span>
-				        </li>
-				    </ul>
-				</div>
+			<div class="page-bar" id="tabMenu">
+			    <ul class="page-breadcrumb row">
+			        <li class="col-6 active first" id="1st">
+			            <span>
+			                <span class="numberCircle checkLabel bg-green-jungle">
+			                    <i class="fa fa-check"></i>
+			                </span>
+			                <span class="numberCircle numberLabel">1</span>
+			                <b>Choose a room</b>
+			            </span>
+			        </li>
+			        <li class="col-6 second" id="2nd">
+			            <span>
+			                <span class="numberCircle checkLabel bg-green-jungle">
+			                    <i class="fa fa-check"></i>
+			                </span>
+			                <span class="numberCircle numberLabel">2</span>
+			                <b>Information</b>
+			            </span>
+			        </li>
+			    </ul>
 			</div>
 			<div class="tab-content">
 				<div id="room-pick" class="tab-pane active">
@@ -108,35 +107,37 @@
 				        	<div class="col-9">
 				        		<input type="hidden" id="qty_room" value="{{$count}}" />
 				        		@foreach($room as $r)
-					        	<div class="card container mb-3" style="background-color: #00000059; color: #fff">
-					        		<div class="row">
-					        				<div class="col-2 room-img p-0">
-												<img src="img/{{$r->image}}" class="card-img" alt="{{$r->name}}">
-											</div>
-											<div class="col-2 card-ab">
-												<span id="{{$r->id}}-name">{{$r->name}}</span>
-											</div>
-											<div class="col-2 card-ab">
-												<span>${{$r->price}}</span>
-											</div>
-											<div class="col-2 card-ab">
-												<span>${{$r->price}}</span>
-											</div>
-											<div class="col-2 card-ab">
-												<span>2</span>
-											</div>
-											<div class="col-2 card-sel">
-												<select style="color: #000" class="sel-qty" id="{{$r->id}}">
-													<option value="0">0</option>
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-												</select>
-											</div>
-					        		</div>
-					        	</div>
+					        		@if($r->available > 0)
+						        	<div class="card container mb-3" style="background-color: #00000059; color: #fff">
+						        		<div class="row">
+						        				<div class="col-2 room-img p-0">
+													<img src="img/{{$r->image}}" class="card-img" alt="{{$r->name}}">
+												</div>
+												<div class="col-2 card-ab">
+													<span id="{{$r->id}}-name">{{$r->name}}</span>
+												</div>
+												<div class="col-2 card-ab">
+													<span>${{$r->price}}</span>
+												</div>
+												<div class="col-2 card-ab">
+													<span>${{$r->price}}</span>
+												</div>
+												<div class="col-2 card-ab">
+													<span>2</span>
+												</div>
+												<div class="col-2 card-sel">
+													<select style="color: #000" class="sel-qty" id="{{$r->id}}" name="sel_{{$r->id}}">
+														<option value="0">0</option>
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+													</select>
+												</div>
+						        		</div>
+						        	</div>
+						        	@endif
 					        	@endforeach
 					        </div>
 					        <div class="col-3 mb-3" >
@@ -149,7 +150,7 @@
 					        		<a href="#" id="promo-code" style="text-align: center;display: block; color: #fff; text-decoration: underline;">Have a promo code?</a>
 					        		<div class="content-collapse" style="display: none;">
 					        			<div class="input-field mb-3 mt-1">
-						        			<input type="text" class="pt-2" style = "color: #fff"required autofocus>
+						        			<input type="text" class="pt-2" style = "color: #fff" autofocus>
 						        			<button class="input-button mt-3">Apply Code</button>
 						        		</div>
 					        		</div>
@@ -162,14 +163,14 @@
 					<div class="payment row justify-content-center">
 						<div class="customer-info col-10 col-lg-7 pl-5 pr-5 mb-5 mt-5">
 							<h5 class="text-center color-white">Your infomation</h5>
-							{{-- @guest --}}
+							@guest
 								<div class="input-field"> 
 	                                <label for="name">Full name:</label>
-	                                <input id="name" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} color-white" value="" required>	                
+	                                <input id="name" name="name" type="text" class="{{ $errors->has('name') ? ' is-invalid' : '' }} color-white" required="required">	                
 	                            </div>
 	                            <div class="input-field">
 	                                <label for="email">Email:</label>
-	                                <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} color-white" name="email" value="" required>
+	                                <input id="email" type="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }} color-white" name="email" required="required">
 
 	                                @if ($errors->has('email'))
 	                                    <div class="alert-error text-center mt-4">
@@ -179,9 +180,9 @@
 	                            </div>
 	                            <div class="input-field">
 	                        	<label for="phone_number">Phone number:</label>
-	                            <input id="phone_number" type="text" class="color-white" name="phone_number" value="" required>   
+	                            <input id="phone_number" type="text" class="color-white" name="phone_number" required="required">   
 	                        </div>
-	                        {{-- @else
+	                        @else
 	                            <div class="input-field"> 
 	                                <label for="name">Full name:</label>
 	                                <input id="name" type="text" class="color-white" value="{{ Auth::user()->name }}" name="name" required>
@@ -200,7 +201,7 @@
 	                            	<label for="phone_number">Phone number:</label>
 	                                <input id="phone_number" type="text" class="color-white" name="phone_number" value="{{$acc_info[0]->phone_number}}" required>   
 	                            </div>
-	                        @endguest --}}   
+	                        @endguest   
 	                        <button type="submit" class="input-button">Complete Reservation</button>  
 	                        {{-- <div class="button-div text-center col-12">
 	                            <button type="submit" class="input-button p-3">Complete Reservation</button>
@@ -210,7 +211,7 @@
 							<h5 class="text-center color-ed">Your reservation</h5>
 							<hr>
 							<p class="bold">Room Selections:</p>
-							<div id="room-sel">
+							<div id="room-sel" class="ml-5">
 								
 							</div>
 							<br>
@@ -237,8 +238,9 @@
 					</div>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
+	</form>
 	<script type="text/javascript">
 		$(document).ready(function() 
 		{
@@ -301,13 +303,13 @@
 					var string = "#"+($i+1);
 					qty[$i]=$(string).val();
 				}
+				$("#room-sel").html("");
 				for($i = 0; $i<count; $i++)
 				{	
-					$("#room-sel").html();
 					if(qty[$i] !=0 )
 					{	
 						var string = "#"+($i+1)+"-name";
-						var temp = $(string).text() + " ( x" + calDate() +" ) " +"<br>";
+						var temp = $(string).text() + " ( x" + qty[$i] +" ) " +"<br>";
 						$("#room-sel").append(temp);
 					}
 				}

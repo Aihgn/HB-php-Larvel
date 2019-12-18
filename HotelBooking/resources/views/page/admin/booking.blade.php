@@ -18,17 +18,19 @@
 					<h2 class="m-3">Select Room</h2>
 					<input type="hidden" id="qty_room" value="{{$count}}" />
 					@foreach($room_type as $i=>$rt)
-					<div class="sel-type m-4 mb-5 row">
-						<div class="v-align">{{$rt->name}}</div>
-						<select class="ml-4 col-4 col-md-4 sel-room-type" name="sel_{{$rt->id}}" id="{{$rt->id}}">
-								<option value="0">0</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-						</select>
-					</div>
+						@if($rt->available > 0)
+						<div class="sel-type m-4 mb-5 row">
+							<div class="v-align">{{$rt->name}}</div>
+							<select class="ml-4 col-4 col-md-4 sel-room-type" name="sel_{{$rt->id}}" id="{{$rt->id}}">
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+							</select>
+						</div>
+						@endif
 					@endforeach	
 					
 				</div>

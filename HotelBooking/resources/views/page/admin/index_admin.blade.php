@@ -5,9 +5,9 @@
             <div class="col-6 col-md-4 col-xs-2">
                 <div class="card pb-3">
                     <div class="card-body">
-                        <a href="#">
-                            <h3>10</h3>
-                            <span>Employee</span>
+                        <a href="{{route('manager_acc')}}">
+                            <h3>{{$countMng}}</h3>
+                            <span>Manager</span>
                         </a>
                     </div>                        
                 </div>
@@ -16,8 +16,8 @@
                 <div class="card pb-3">
                     <div class="card-body">
                         <a href="#">
-                            <h3>50</h3>
-                            <span>Customer</span>
+                            <h3>{{$countCus}}</h3>
+                            <span>Reservations</span>
                         </a>
                     </div>                        
                 </div>
@@ -25,9 +25,9 @@
             <div class="col-6 col-md-4 col-xs-2">
                 <div class="card pb-3">
                     <div class="card-body">
-                        <a href="#">
-                            <h3>12</h3>
-                            <span>Reservation</span>
+                        <a href="{{route('all_res')}}">
+                            <h3>{{$countUcf}}</h3>
+                            <span>Pending Reservations</span>
                         </a>
                     </div>                        
                 </div>

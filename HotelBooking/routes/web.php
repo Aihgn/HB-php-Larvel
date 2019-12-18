@@ -11,12 +11,13 @@ Route::get('about', 'PageController@getAbout')->name('about');
 
 Route::get('reservations', 'PageController@getRes')->name('res');
 
+Route::post('reservations', 'PageController@postRes')->name('res');
+
 Route::get('reservations/get-total', 'AjaxController@getTotal')->name('r_get_total');
 
 Route::get('search-res', 'PageController@getSearchRes')->name('search_res');
 
 Auth::routes();
-
 
 
 //user--------------------------------------------------------------
@@ -27,11 +28,6 @@ Route::post('myaccount', 'PageController@changeAccInfo')->name('myaccount');
 Route::post('myaccount/change-password', 'PageController@changePassword')->name('change-password')->middleware('auth');
 
 Route::get('myaccount/cancel-reservation/{id}', 'PageController@cancelReservation')->name('cancel-res')->middleware('auth');
-
-// Route::get('booking', 'PageController@getBooking')->name('booking');
-
-// Route::post('booking', 'PageController@postBooking')->name('booking');
-
 
 
 //admin-------------------------------------------------------------------
@@ -51,8 +47,7 @@ Route::middleware('manager')->group(function () {
 		Route::get('check-out', 'AdminController@getCheckout')->name('check_out');
 
 		Route::get('check-out/co', 'AjaxController@checkout')->name('check_out.action');
-
-		Route::get('check-out/all-res', 'AdminController@getAllRes')->name('all_res');
+		
 
 
 		//book off--------------------------------------------
@@ -63,8 +58,22 @@ Route::middleware('manager')->group(function () {
 
 		Route::get('book-off/get-total', 'AjaxController@getTotal')->name('get_total');
 
+		// ============================
+		Route::get('all-res', 'AdminController@getAllRes')->name('all_res');
 
-		//manger account-----------------------------------------------------
+		Route::get('all-res/pick-date-res', 'AjaxController@getResInfo')->name('res.pick-date');
+		
+		Route::get('all-res/res-stt', 'AjaxController@getResByStt')->name('res-stt');
+
+		Route::get('all-res/confirm-res', 'AjaxController@confirmRes')->name('confirm-res');
+
+		Route::get('all-res/cancel-res', 'AjaxController@cancelRes')->name('cancel-ad-res');
+	});
+});
+
+Route::middleware('admin')->group(function () {
+	Route::prefix('admin')->group(function () {
+	//manger account-----------------------------------------------------
 		Route::get('manager-account', 'AdminController@getManagerAcc')->name('manager_acc');
 
 		Route::post('manager-account/add-manager', 'AjaxController@addManager')->name('add_manager');
@@ -74,9 +83,7 @@ Route::middleware('manager')->group(function () {
 		Route::post('manager-account/del-acc', 'AjaxController@deleteAccount')->name('delete_acc');
 
 		Route::get('manager-account/get-acc', 'AjaxController@getAccount')->name('get_account');
-
-
-		//manager room-----------------------------------------------------
+	//manager room-----------------------------------------------------
 		Route::get('manager-room', 'AdminController@getManagerRoom')->name('manager_room');
 
 		Route::get('manager-room/get-room-type', 'AjaxController@getRoomType')->name('get_room_type');
@@ -86,11 +93,5 @@ Route::middleware('manager')->group(function () {
 		Route::post('manager-room/post-room-type', 'AjaxController@postRoomType')->name('post_room_type');
 
 		Route::post('manager-room/del-room-type', 'AjaxController@delRoomType')->name('del_room_type');
-
-
-		// ============================
-
-		Route::get('pick-date-res', 'AjaxController@getResInfo')->name('res.pick-date');
 	});
-
 });
