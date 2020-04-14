@@ -33,7 +33,7 @@
         			<th>Date in</th>
                     <th>Date out</th>
         			<th>Status</th>
-        			<th colspan="2"></th>
+        			<th style="width:15%">Action</th>
         		</tr>
         	</thead>
         	<tbody id="tb-res-info">

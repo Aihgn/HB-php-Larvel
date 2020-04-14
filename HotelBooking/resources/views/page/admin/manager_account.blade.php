@@ -3,18 +3,18 @@
 
 
 	<div class="card p-2 mt-3">
-		<h2 class="m-3">Team manager</h2>
-		<button id="add_data"  type="button" data-toggle="modal" class="btn btn-danger m-3 col-6 col-md-3">+ Add New Manager</button>
+		<h2 class="m-3">Team Manager</h2>
+		<button id="add_data"  type="button" data-toggle="modal" class="btn btn-dan-rev m-3 col-6 col-md-3">+ Add New Manager</button>
 		<span id="mess_output" class="m-3"></span>
 		<div class="table-responsive">
 			<table class="table table-striped">
 		    	<thead>
 		    		<tr>
-		    			<th>No.</th>	
+		    			<th style="width:5%">No.</th>	
 		    			<th>Name</th>    			
 		    			<th>Email</th>
-		    			<th>Group</th>    			
-		    			<th colspan="2">Action</th>
+		    			<th style="width:15%">Group</th>    			
+		    			<th style="width:15%">Action</th>
 		    		</tr>
 		    	</thead>
 		    	<tbody id='account-manager'>    		
@@ -25,8 +25,10 @@
 		    			<td>{{$r->email}}</td>   
 		    			@if($r->group_id == 2) 			
 		    				<td>{{$r->group_name}}</td>
-		    				<td><a href="#" id='{{$r->id}}' class="remove-role btn btn-danger pb-2 pt-2 pl-1 pr-1">Remove</a></td>
-		    				<td><a href="#" id='{{$r->id}}' class="delete-acc btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</a></td> 			
+							<td style="text-align:center;">
+								<a href="#" id='{{$r->id}}' class="remove-role btn btn-danger "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon-cont"><path d="M497.941 273.941c18.745-18.745 18.745-49.137 0-67.882l-160-160c-18.745-18.745-49.136-18.746-67.883 0l-256 256c-18.745 18.745-18.745 49.137 0 67.882l96 96A48.004 48.004 0 0 0 144 480h356c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12H355.883l142.058-142.059zm-302.627-62.627l137.373 137.373L265.373 416H150.628l-80-80 124.686-124.686z"/></svg></a>
+								<a href="#" id='{{$r->id}}' class="delete-acc btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon-cont"><path d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"/></svg></a>
+							</td> 			
 		    			@else
 		    				<td>{{$r->group_name}}</td>
 		    				<td colspan="2"></td>
@@ -168,7 +170,5 @@
 		        })
 		    });
 		});
-			
-
     </script>
 @endsection

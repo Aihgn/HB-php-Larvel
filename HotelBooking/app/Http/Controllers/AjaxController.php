@@ -119,12 +119,12 @@ class AjaxController extends Controller
                 {
                     if($stt == 2)
                     {
-                        $output .= '<td><span class="stt-d p-2">Confirm</span></td></tr>';
+                        $output .= '<td style="text-align: center;"><span class="stt-d p-2">Confirm</span></td></tr>';
                     }
                     else
                     {
                         $output .= '                       
-                            <td><span class="stt-d p-2">Confirm</span></td>
+                            <td style="text-align: center;"><span class="stt-d p-2">Confirm</span></td>
                             <td class="p-1"><button class="btn-check-out btn btn-danger" id="'.$row->id.'">Check-out</button></td>
                         </tr>';
                     }                    
@@ -133,9 +133,10 @@ class AjaxController extends Controller
                 {
                      if($stt == 2)
                     {
-                        $output .= '<td><span class="stt-p p-2">Pending</span></td>
-                                    <td class="p-1"><button class="btn-confirm btn btn-success" id="'.$row->id.'">Confirm</button></td>
-                                    <td class="p-1"><button class="btn-cancel btn btn-danger"  id="'.$row->id.'">Cancel</button></td>
+                        $output .= '<td style="text-align: center;"><span class="stt-p p-2">Pending</span></td>
+                                    <td class="p-1" style="text-align: center;">
+                                    <button class="btn-confirm btn btn-success" title="Confirm" id="'.$row->id.'"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon-cont"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg></button>
+                                    <button class="btn-cancel btn btn-danger" title="Cancel" id="'.$row->id.'"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon-cont"><path d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/></svg></button></td>
                                 </tr>';
                     }
                     else
@@ -148,11 +149,11 @@ class AjaxController extends Controller
                 }
                 else if($row->status == 2)
                 {
-                     $output .= '<td><span class="stt-c p-2">Cancel</span></td></tr>';
+                     $output .= '<td style="text-align: center;"><span class="stt-c p-2">Cancel</span></td></tr>';
                 }
                 else
                 {
-                    $output .= '<td><span class="stt-d p-2">Done</span></td></tr>';
+                    $output .= '<td style="text-align: center;"><span class="stt-d p-2">Done</span></td></tr>';
                 }                      
            } 
             echo json_encode($output);
@@ -289,8 +290,10 @@ class AjaxController extends Controller
                 {
                     $output .= '                    
                         <td>'.($r->group_name).'</td>
-                            <td><a href="#" id="'.($r->id).'" class="remove-role btn btn-danger pb-2 pt-2 pl-1 pr-1">Remove</a></td>
-                            <td><a href="#" id="'.($r->id).'" class="delete-acc btn btn-danger pb-2 pt-2 pl-1 pr-1">Delete</a></td>
+                            <td>
+                                <a href="#" id="'.($r->id).'" class="remove-role btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon-cont"><path d="M497.941 273.941c18.745-18.745 18.745-49.137 0-67.882l-160-160c-18.745-18.745-49.136-18.746-67.883 0l-256 256c-18.745 18.745-18.745 49.137 0 67.882l96 96A48.004 48.004 0 0 0 144 480h356c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12H355.883l142.058-142.059zm-302.627-62.627l137.373 137.373L265.373 416H150.628l-80-80 124.686-124.686z"/></svg></a>
+                                <a href="#" id="'.($r->id).'" class="delete-acc btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon-cont"><path d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"/></svg></a>
+                            </td>
                     ';
                 }
                 else{

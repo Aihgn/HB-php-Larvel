@@ -8,10 +8,10 @@
             <input type="text" id="date" name="date_pick" id="date"  value="" placeholder="" />
             </div>                          
         </div>
-        {{-- <div class="input-field mt-3 mb-2 col-5"> 
+        <!--<div class="input-field mt-3 mb-2 col-5"> 
             <label for="search">{{ __('Search') }}</label>
             <input id="search" type="text" placeholder="" required autofocus>
-        </div> --}}
+        </div>-->
         <h2>List Reservations</h2>
     	<table class="table table-hover">
         	<thead>
